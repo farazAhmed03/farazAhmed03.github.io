@@ -28,22 +28,69 @@
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 136, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(0, 255, 136, 0.03) 0%, transparent 50%);
+            z-index: 0;
+            pointer-events: none;
+            animation: bgPulse 15s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Grid Pattern */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            pointer-events: none;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            position: relative;
+            z-index: 1;
         }
 
         /* Header */
         header {
-            background: var(--bg-secondary);
+            background: rgba(26, 26, 26, 0.8);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
         }
 
         nav {
@@ -54,56 +101,124 @@
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
             background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -1px;
         }
 
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 40px;
             list-style: none;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
         }
 
         .nav-links a {
             color: var(--text-secondary);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s;
             font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
         }
 
         .nav-links a:hover {
             color: var(--accent);
         }
 
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
         /* Hero Section */
         .hero {
-            padding: 100px 0;
+            padding: 120px 0 100px;
             text-align: center;
-            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            background: linear-gradient(180deg, rgba(26, 26, 26, 0.5) 0%, transparent 100%);
+            position: relative;
+        }
+
+        .profile-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            border: 4px solid var(--accent);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+            animation: fadeInUp 0.8s ease;
+            object-fit: cover;
         }
 
         .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            animation: fadeInUp 0.8s ease;
+            font-size: 52px;
+            margin-bottom: 15px;
+            animation: fadeInUp 0.8s ease 0.1s backwards;
+            background: linear-gradient(135deg, #ffffff, var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero .subtitle {
-            font-size: 24px;
-            color: var(--text-secondary);
+            font-size: 20px;
+            color: var(--accent);
             margin-bottom: 30px;
             animation: fadeInUp 0.8s ease 0.2s backwards;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
         }
 
         .hero .description {
-            max-width: 700px;
+            max-width: 750px;
             margin: 0 auto 40px;
             color: var(--text-secondary);
             animation: fadeInUp 0.8s ease 0.4s backwards;
+            font-size: 16px;
+            line-height: 1.8;
+            text-align: justify;
         }
 
         .cta-buttons {
@@ -114,12 +229,13 @@
         }
 
         .btn {
-            padding: 12px 30px;
+            padding: 14px 35px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s;
             border: 2px solid transparent;
+            font-size: 15px;
         }
 
         .btn-primary {
@@ -128,52 +244,55 @@
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 255, 136, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 255, 136, 0.4);
         }
 
         .btn-secondary {
             border: 2px solid var(--accent);
             color: var(--accent);
+            background: transparent;
         }
 
         .btn-secondary:hover {
             background: var(--accent);
             color: var(--bg-primary);
+            transform: translateY(-3px);
         }
 
         /* Section */
         section {
-            padding: 80px 0;
+            padding: 100px 0;
+            position: relative;
         }
 
         .section-title {
-            font-size: 36px;
+            font-size: 40px;
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
             position: relative;
         }
 
         .section-title::after {
             content: '';
             display: block;
-            width: 60px;
+            width: 80px;
             height: 4px;
-            background: var(--accent);
-            margin: 20px auto 0;
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            margin: 25px auto 0;
             border-radius: 2px;
         }
 
         /* Skills */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 20px;
         }
 
         .skill-card {
             background: var(--bg-card);
-            padding: 20px;
+            padding: 25px;
             border-radius: 12px;
             text-align: center;
             border: 1px solid var(--border);
@@ -182,12 +301,77 @@
 
         .skill-card:hover {
             border-color: var(--accent);
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
         }
 
         .skill-card span {
             font-size: 14px;
             color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* FYP Section */
+        .fyp-section {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 136, 255, 0.05));
+            padding: 80px 0;
+            margin: 60px 0;
+            border-radius: 20px;
+        }
+
+        .fyp-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 50px;
+            border: 2px solid var(--accent);
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0, 255, 136, 0.1);
+        }
+
+        .fyp-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .fyp-card h3 {
+            font-size: 32px;
+            margin-bottom: 25px;
+            color: var(--text-primary);
+        }
+
+        .fyp-card > p {
+            text-align: justify;
+        }
+
+        .fyp-features {
+            list-style: none;
+            margin: 25px 0;
+        }
+
+        .fyp-features li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .fyp-features li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 20px;
         }
 
         /* Projects */
@@ -195,18 +379,19 @@
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             flex-wrap: wrap;
         }
 
         .filter-btn {
-            padding: 10px 25px;
+            padding: 12px 28px;
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 25px;
             color: var(--text-secondary);
             cursor: pointer;
             transition: all 0.3s;
+            font-weight: 500;
         }
 
         .filter-btn.active,
@@ -214,73 +399,80 @@
             background: var(--accent);
             color: var(--bg-primary);
             border-color: var(--accent);
+            transform: translateY(-2px);
         }
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 35px;
         }
 
         .project-card {
             background: var(--bg-card);
             border-radius: 16px;
-            padding: 30px;
+            padding: 35px;
             border: 1px solid var(--border);
             transition: all 0.3s;
         }
 
         .project-card:hover {
             border-color: var(--accent);
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.15);
         }
 
         .project-tag {
             display: inline-block;
-            padding: 5px 12px;
+            padding: 6px 14px;
             background: rgba(0, 255, 136, 0.1);
             color: var(--accent);
             border-radius: 20px;
             font-size: 12px;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
+            font-weight: 600;
         }
 
         .project-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
+            font-size: 23px;
+            margin-bottom: 16px;
+            color: var(--text-primary);
         }
 
         .project-card p {
             color: var(--text-secondary);
-            margin-bottom: 20px;
+            margin-bottom: 22px;
             font-size: 14px;
+            line-height: 1.7;
+            text-align: justify;
         }
 
         .tech-stack {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 20px;
+            gap: 10px;
+            margin-top: 22px;
         }
 
         .tech-badge {
-            padding: 5px 12px;
+            padding: 6px 14px;
             background: var(--bg-secondary);
             border-radius: 6px;
             font-size: 12px;
             color: var(--text-secondary);
+            border: 1px solid var(--border);
         }
 
         /* Contact */
         .contact-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 30px;
         }
 
         .contact-card {
             background: var(--bg-card);
-            padding: 30px;
+            padding: 35px;
             border-radius: 12px;
             border: 1px solid var(--border);
             text-align: center;
@@ -289,24 +481,30 @@
 
         .contact-card:hover {
             border-color: var(--accent);
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.15);
         }
 
         .contact-card h3 {
-            margin: 15px 0 10px;
+            margin: 15px 0 12px;
             font-size: 18px;
         }
 
         .contact-card a {
             color: var(--accent);
             text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-card a:hover {
+            text-decoration: underline;
         }
 
         /* Footer */
         footer {
             background: var(--bg-secondary);
             border-top: 1px solid var(--border);
-            padding: 30px 0;
+            padding: 35px 0;
             text-align: center;
             color: var(--text-secondary);
         }
@@ -326,15 +524,34 @@
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 32px;
+                font-size: 36px;
             }
 
             .hero .subtitle {
-                font-size: 18px;
+                font-size: 16px;
             }
 
             .nav-links {
-                gap: 15px;
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                flex-direction: column;
+                background: rgba(26, 26, 26, 0.98);
+                backdrop-filter: blur(20px);
+                width: 70%;
+                padding: 40px 30px;
+                gap: 25px;
+                border-left: 1px solid var(--border);
+                transition: right 0.3s ease;
+                height: calc(100vh - 70px);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger {
+                display: flex;
             }
 
             .projects-grid {
@@ -343,6 +560,15 @@
 
             .cta-buttons {
                 flex-direction: column;
+            }
+
+            .fyp-card {
+                padding: 30px;
+            }
+
+            .profile-image {
+                width: 150px;
+                height: 150px;
             }
         }
 
@@ -354,34 +580,37 @@
 <body>
     <header>
         <nav class="container">
-            <div class="logo">MF</div>
-            <ul class="nav-links">
+            <div class="logo">MF.</div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
+                <li><a href="#fyp">FYP</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <section class="hero">
+    <section class="hero" id="about">
         <div class="container">
+            <img src="https://ibb.co/n8DjvFdG" alt="Muhammad Faraz" class="profile-image">
             <h1>Muhammad Faraz</h1>
-            <p class="subtitle">Associate MERN STACK DEVELOPER | DEVOPS PRACTICES </p>
+            <p class="subtitle">MERN Stack Developer | DevOps Enthusiast</p>
             <p class="description">
                 Computer Science Graduate with a strong foundation in full-stack development 
                 and a growing interest in DevOps practices. Experienced in building scalable 
-                web applications using the MERN stack while actively expanding knowledge in 
-                containerization, CI/CD pipelines, and deployment automation.
-                Currently learning Docker, Git workflows, and Linux fundamentals to bridge 
-                the gap between development and operations. Passionate about clean code, 
-                system architecture, and understanding how software is built, deployed, and 
-                maintained in production environments.
-                Seeking opportunities to apply development skills while gaining hands-on 
-                experience in DevOps practices. Eager to learn from experienced teams and 
-                contribute to building reliable, efficient systems. Committed to continuous 
-                learning and evolving towards a well-rounded engineering career that spans 
-                both development and infrastructure.
+                web applications using the MERN stack while actively learning Docker, CI/CD 
+                pipelines, Linux fundamentals, and deployment automation.
+                <br><br>
+                Focused on writing clean code and understanding system architecture. Seeking 
+                opportunities to apply development skills while gaining hands-on DevOps 
+                experience. Eager to learn from experienced teams and contribute to building 
+                reliable, efficient systems.
             </p>
             <div class="cta-buttons">
                 <a href="#contact" class="btn btn-primary">Get In Touch</a>
@@ -404,15 +633,45 @@
                 <div class="skill-card"><span>Docker</span></div>
                 <div class="skill-card"><span>Git & GitHub</span></div>
                 <div class="skill-card"><span>REST APIs</span></div>
-                <div class="skill-card"><span>Firebase</span></div>
-                <div class="skill-card"><span>Laravel (PHP)</span></div>
+                <div class="skill-card"><span>Firebase (Auth & Firestore)</span></div>
+                <div class="skill-card"><span>MVC Architecture & Microservices </span></div>
+                <div class="skill-card"><span>JIRA (Familiar)</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="fyp" class="fyp-section">
+        <div class="container">
+            <h2 class="section-title">Final Year Project</h2>
+            <div class="fyp-card">
+                <span class="fyp-badge">★ Featured Project - FYP</span>
+                <h3>Legal Sphere – Lawyer Management System</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 25px; font-size: 15px;">
+                    A comprehensive web-based platform built with MERN Stack to digitalize and streamline legal workflows between lawyers and clients.
+                </p>
+                <ul class="fyp-features">
+                    <li>Developed a comprehensive web-based platform to digitalize legal workflows between lawyers and clients</li>
+                    <li>Implemented secure, role-based authentication to manage segregated access for different user types</li>
+                    <li>Integrated real-time chat and appointment scheduling to facilitate seamless lawyer-client communication</li>
+                    <li>Secured backend APIs using Rate Limiting, Helmet, and Morgan to prevent abuse</li>
+                    <li>Containerized the entire application using Docker to ensure consistent development environments and resolve local MongoDB connectivity issues</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-badge">MongoDB</span>
+                    <span class="tech-badge">Express.js</span>
+                    <span class="tech-badge">React.js</span>
+                    <span class="tech-badge">Node.js</span>
+                    <span class="tech-badge">Docker</span>
+                    <span class="tech-badge">Real-time Chat</span>
+                    <span class="tech-badge">JWT Authentication</span>
+                </div>
             </div>
         </div>
     </section>
 
     <section id="projects">
         <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
+            <h2 class="section-title">Other Projects</h2>
             
             <div class="projects-filter">
                 <button class="filter-btn active" data-filter="all">All</button>
@@ -425,14 +684,13 @@
                 <!-- Development Projects -->
                 <div class="project-card" data-category="development">
                     <span class="project-tag">Development</span>
-                    <h3>Legal Sphere - Lawyer Management System</h3>
-                    <p>Comprehensive web platform digitizing legal workflows with secure authentication, real-time chat, and appointment scheduling. Containerized with Docker for consistent deployment.</p>
+                    <h3>Perfume E-Commerce Platform</h3>
+                    <p>Modern e-commerce platform with microservices-ready architecture. Built as a monolith but structured with clear service boundaries enabling seamless migration to distributed microservices if scaling requirements arise.</p>
                     <div class="tech-stack">
-                        <span class="tech-badge">MongoDB</span>
-                        <span class="tech-badge">Express.js</span>
-                        <span class="tech-badge">React</span>
-                        <span class="tech-badge">Node.js</span>
-                        <span class="tech-badge">Docker</span>
+                        <span class="tech-badge">MERN Stack</span>
+                        <span class="tech-badge">Microservices-Ready</span>
+                        <span class="tech-badge">Domain-Driven Design</span>
+                        <span class="tech-badge">REST API</span>
                     </div>
                 </div>
 
@@ -444,17 +702,17 @@
                         <span class="tech-badge">Node.js</span>
                         <span class="tech-badge">Express.js</span>
                         <span class="tech-badge">MySQL</span>
-                        <span class="tech-badge">REST API</span>
+                        <span class="tech-badge">MVC</span>
                     </div>
                 </div>
 
                 <div class="project-card" data-category="development">
                     <span class="project-tag">Development</span>
                     <h3>FalmSafe - Telemedicine Platform</h3>
-                    <p>Doctor-patient consultation platform with secure backend APIs. Built with Laravel to manage complex relationships and ensure smooth data flow with input validation.</p>
+                    <p>Doctor-patient consultation platform with secure backend APIs. Manages complex relationships between patients, doctors, and appointments with comprehensive input validation.</p>
                     <div class="tech-stack">
-                        <span class="tech-badge">Laravel</span>
-                        <span class="tech-badge">PHP</span>
+                        <span class="tech-badge">Node.js</span>
+                        <span class="tech-badge">Express.js</span>
                         <span class="tech-badge">MySQL</span>
                         <span class="tech-badge">REST API</span>
                     </div>
@@ -473,16 +731,16 @@
                     </div>
                 </div>
 
-                <!-- DevOps Project -->
+                <!-- DevOps Projects -->
                 <div class="project-card" data-category="devops">
                     <span class="project-tag">DevOps</span>
-                    <h3>Docker Containerization - Legal Sphere</h3>
-                    <p>Containerized full-stack MERN application with Docker to ensure consistent development environments across teams. Resolved MongoDB connectivity issues and streamlined deployment process.</p>
+                    <h3>Docker Containerization</h3>
+                    <p>Containerized full-stack MERN applications with Docker to ensure consistent development environments across teams. Resolved MongoDB connectivity issues and streamlined deployment process.</p>
                     <div class="tech-stack">
                         <span class="tech-badge">Docker</span>
                         <span class="tech-badge">Docker Compose</span>
                         <span class="tech-badge">MongoDB</span>
-                        <span class="tech-badge">CI/CD</span>
+                        <span class="tech-badge">MERN Stack</span>
                     </div>
                 </div>
 
@@ -506,19 +764,19 @@
             <h2 class="section-title">Get In Touch</h2>
             <div class="contact-grid">
                 <div class="contact-card">
-                    <h3>📧 Email</h3>
+                    <h3> Email</h3>
                     <a href="mailto:faraztkd05@gmail.com">faraztkd05@gmail.com</a>
                 </div>
                 <div class="contact-card">
-                    <h3>📱 Phone</h3>
+                    <h3> Phone</h3>
                     <a href="tel:+923119360216">+92 311 9360216</a>
                 </div>
                 <div class="contact-card">
-                    <h3>💼 LinkedIn</h3>
+                    <h3> LinkedIn</h3>
                     <a href="https://linkedin.com/in/yourprofile" target="_blank">Connect on LinkedIn</a>
                 </div>
                 <div class="contact-card">
-                    <h3>💻 GitHub</h3>
+                    <h3> GitHub</h3>
                     <a href="https://github.com/yourgithub" target="_blank">View My Code</a>
                 </div>
             </div>
@@ -532,6 +790,23 @@
     </footer>
 
     <script>
+        // Hamburger Menu
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
         // Project Filter
         const filterBtns = document.querySelectorAll('.filter-btn');
         const projectCards = document.querySelectorAll('.project-card');
