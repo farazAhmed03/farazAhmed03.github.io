@@ -40,17 +40,23 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 136, 255, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(0, 255, 136, 0.03) 0%, transparent 50%);
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 136, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
             z-index: 0;
             pointer-events: none;
-            animation: bgPulse 15s ease-in-out infinite;
+            animation: bgPulse 10s ease-in-out infinite;
         }
 
         @keyframes bgPulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+            0%, 100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
         }
 
         /* Grid Pattern */
@@ -62,17 +68,17 @@
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
+                linear-gradient(rgba(0, 255, 136, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
             z-index: 0;
             pointer-events: none;
-            animation: gridMove 20s linear infinite;
+            animation: gridMove 25s linear infinite;
         }
 
         @keyframes gridMove {
             0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
+            100% { transform: translate(60px, 60px); }
         }
 
         .container {
@@ -97,7 +103,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 25px 0;
         }
 
         .logo {
@@ -181,14 +187,35 @@
         }
 
         .profile-image {
-            width: 180px;
-            height: 180px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
             margin: 0 auto 30px;
-            border: 4px solid var(--accent);
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
-            animation: fadeInUp 0.8s ease;
+            border: 3px solid var(--accent);
+            box-shadow: 
+                0 0 20px rgba(0, 255, 136, 0.4),
+                0 0 40px rgba(0, 255, 136, 0.2),
+                0 0 60px rgba(0, 255, 136, 0.1);
+            animation: profileFloat 3s ease-in-out infinite, fadeInUp 0.8s ease;
             object-fit: cover;
+            position: relative;
+        }
+
+        @keyframes profileFloat {
+            0%, 100% {
+                transform: translateY(0px);
+                box-shadow: 
+                    0 0 20px rgba(0, 255, 136, 0.4),
+                    0 0 40px rgba(0, 255, 136, 0.2),
+                    0 0 60px rgba(0, 255, 136, 0.1);
+            }
+            50% {
+                transform: translateY(-10px);
+                box-shadow: 
+                    0 0 30px rgba(0, 255, 136, 0.6),
+                    0 0 60px rgba(0, 255, 136, 0.3),
+                    0 0 90px rgba(0, 255, 136, 0.15);
+            }
         }
 
         .hero h1 {
@@ -567,8 +594,8 @@
             }
 
             .profile-image {
-                width: 150px;
-                height: 150px;
+                width: 120px;
+                height: 120px;
             }
         }
 
@@ -598,7 +625,7 @@
 
     <section class="hero" id="about">
         <div class="container">
-             <img src="my.png" alt="Muhammad Faraz" class="profile-image">
+            <img src="./my.png" alt="Muhammad Faraz" class="profile-image">
             <h1>Muhammad Faraz</h1>
             <p class="subtitle">MERN Stack Developer | DevOps Enthusiast</p>
             <p class="description">
@@ -633,9 +660,9 @@
                 <div class="skill-card"><span>Docker</span></div>
                 <div class="skill-card"><span>Git & GitHub</span></div>
                 <div class="skill-card"><span>REST APIs</span></div>
-                <div class="skill-card"><span>Firebase (Auth & Firestore)</span></div>
-                <div class="skill-card"><span>MVC Architecture & Microservices</span></div>
-                <div class="skill-card"><span>JIRA (Familiar)</span></div>
+                <div class="skill-card"><span>Firebase</span></div>
+                <div class="skill-card"><span>MVC Architecture</span></div>
+                <div class="skill-card"><span>JIRA</span></div>
             </div>
         </div>
     </section>
@@ -773,11 +800,11 @@
                 </div>
                 <div class="contact-card">
                     <h3> LinkedIn</h3>
-                    <a href="https://linkedin.com/in/yourprofile" target="_blank">Connect on LinkedIn</a>
+                    <a href="http://linkedin.com/in/muhammad-faraz-44922b370/" target="_blank">Connect on LinkedIn</a>
                 </div>
                 <div class="contact-card">
                     <h3> GitHub</h3>
-                    <a href="https://github.com/yourgithub" target="_blank">View My Code</a>
+                    <a href="https://github.com/farazAhmed03" target="_blank">View My Code</a>
                 </div>
             </div>
         </div>
