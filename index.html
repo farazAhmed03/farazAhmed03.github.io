@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,7 +40,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
+            background:
                 radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.08) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(0, 136, 255, 0.08) 0%, transparent 50%),
                 radial-gradient(circle at 40% 20%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
@@ -49,11 +50,14 @@
         }
 
         @keyframes bgPulse {
-            0%, 100% { 
+
+            0%,
+            100% {
                 opacity: 1;
                 transform: scale(1);
             }
-            50% { 
+
+            50% {
                 opacity: 0.8;
                 transform: scale(1.05);
             }
@@ -67,7 +71,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
+            background-image:
                 linear-gradient(rgba(0, 255, 136, 0.04) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 255, 136, 0.04) 1px, transparent 1px);
             background-size: 60px 60px;
@@ -77,8 +81,13 @@
         }
 
         @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(60px, 60px); }
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(60px, 60px);
+            }
         }
 
         .container {
@@ -118,26 +127,21 @@
         }
 
         @keyframes glow {
-            0%, 100% {
+
+            0%,
+            100% {
                 filter: drop-shadow(0 0 5px rgba(0, 255, 136, 0.5));
             }
+
             50% {
                 filter: drop-shadow(0 0 15px rgba(0, 255, 136, 0.8));
             }
         }
 
         .nav-links {
-            position: fixed;
-            inset: 0;
-            top: 76px;
-            flex-direction: column;
-            background: rgba(10, 10, 10, 0.98);
-            backdrop-filter: blur(20px);
-            padding: 40px 30px;
-            gap: 30px;
-            transform: translateX(100%);
-            transition: transform 0.4s ease;
-            overflow-y: auto;
+            display: flex;
+            gap: 40px;
+            list-style: none;
         }
 
         .hamburger {
@@ -218,8 +222,13 @@
         }
 
         @keyframes heroRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .profile-image {
@@ -228,7 +237,7 @@
             border-radius: 50%;
             margin: 0 auto 30px;
             border: 3px solid var(--accent);
-            box-shadow: 
+            box-shadow:
                 0 0 20px rgba(0, 255, 136, 0.4),
                 0 0 40px rgba(0, 255, 136, 0.2),
                 0 0 60px rgba(0, 255, 136, 0.1);
@@ -238,23 +247,29 @@
         }
 
         @keyframes profileFloat {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateY(0px);
             }
+
             50% {
                 transform: translateY(-10px);
             }
         }
 
         @keyframes profilePulse {
-            0%, 100% {
-                box-shadow: 
+
+            0%,
+            100% {
+                box-shadow:
                     0 0 20px rgba(0, 255, 136, 0.4),
                     0 0 40px rgba(0, 255, 136, 0.2),
                     0 0 60px rgba(0, 255, 136, 0.1);
             }
+
             50% {
-                box-shadow: 
+                box-shadow:
                     0 0 30px rgba(0, 255, 136, 0.6),
                     0 0 60px rgba(0, 255, 136, 0.3),
                     0 0 90px rgba(0, 255, 136, 0.15);
@@ -273,9 +288,12 @@
         }
 
         @keyframes textShine {
-            0%, 100% {
+
+            0%,
+            100% {
                 background-position: 0% 50%;
             }
+
             50% {
                 background-position: 100% 50%;
             }
@@ -292,9 +310,12 @@
         }
 
         @keyframes subtitleGlow {
-            0%, 100% {
+
+            0%,
+            100% {
                 text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
             }
+
             50% {
                 text-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
             }
@@ -354,9 +375,12 @@
         }
 
         @keyframes btnPulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7);
             }
+
             50% {
                 box-shadow: 0 0 0 10px rgba(0, 255, 136, 0);
             }
@@ -405,9 +429,12 @@
         }
 
         @keyframes lineExpand {
-            0%, 100% {
+
+            0%,
+            100% {
                 width: 80px;
             }
+
             50% {
                 width: 120px;
             }
@@ -450,8 +477,13 @@
         }
 
         @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .skill-card:hover {
@@ -485,16 +517,19 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: 
+            background:
                 radial-gradient(circle at 30% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 70% 50%, rgba(0, 136, 255, 0.1) 0%, transparent 50%);
             animation: fypBgMove 15s ease-in-out infinite;
         }
 
         @keyframes fypBgMove {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translate(0, 0) rotate(0deg);
             }
+
             50% {
                 transform: translate(50px, 50px) rotate(180deg);
             }
@@ -514,10 +549,13 @@
         }
 
         @keyframes cardFloat {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateY(0px);
                 box-shadow: 0 20px 60px rgba(0, 255, 136, 0.1);
             }
+
             50% {
                 transform: translateY(-10px);
                 box-shadow: 0 30px 70px rgba(0, 255, 136, 0.2);
@@ -539,10 +577,13 @@
         }
 
         @keyframes badgePulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: scale(1);
                 box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7);
             }
+
             50% {
                 transform: scale(1.05);
                 box-shadow: 0 0 0 10px rgba(0, 255, 136, 0);
@@ -556,7 +597,7 @@
             animation: fadeInUp 0.8s ease 0.2s backwards;
         }
 
-        .fyp-card > p {
+        .fyp-card>p {
             text-align: justify;
             animation: fadeInUp 0.8s ease 0.3s backwards;
         }
@@ -577,11 +618,25 @@
             animation-delay: calc(0.4s + var(--i) * 0.1s);
         }
 
-        .fyp-features li:nth-child(1) { --i: 0; }
-        .fyp-features li:nth-child(2) { --i: 1; }
-        .fyp-features li:nth-child(3) { --i: 2; }
-        .fyp-features li:nth-child(4) { --i: 3; }
-        .fyp-features li:nth-child(5) { --i: 4; }
+        .fyp-features li:nth-child(1) {
+            --i: 0;
+        }
+
+        .fyp-features li:nth-child(2) {
+            --i: 1;
+        }
+
+        .fyp-features li:nth-child(3) {
+            --i: 2;
+        }
+
+        .fyp-features li:nth-child(4) {
+            --i: 3;
+        }
+
+        .fyp-features li:nth-child(5) {
+            --i: 4;
+        }
 
         .fyp-features li::before {
             content: '▹';
@@ -593,9 +648,12 @@
         }
 
         @keyframes arrowBounce {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateX(0);
             }
+
             50% {
                 transform: translateX(5px);
             }
@@ -798,6 +856,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -806,41 +865,46 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .hero .subtitle {
-                font-size: 16px;
-            }
-
             .nav-links {
                 position: fixed;
                 top: 76px;
-                right: -100%;
+                right: 0;
+                width: 100%;
+                height: calc(100vh - 76px);
                 flex-direction: column;
                 background: rgba(10, 10, 10, 0.98);
                 backdrop-filter: blur(20px);
-                width: 100%;
                 padding: 40px 30px;
                 gap: 30px;
-                border-left: none;
-                transition: right 0.4s ease;
-                height: calc(100vh - 76px);
                 border-top: 1px solid var(--border);
+                transform: translateX(100%);
+                opacity: 0;
+                pointer-events: none;
+                transition: transform 0.4s ease, opacity 0.3s ease;
             }
 
             .nav-links.active {
                 transform: translateX(0);
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+
+            .nav-links a {
+                font-size: 18px;
+                padding: 10px 0;
             }
 
             .hamburger {
                 display: flex;
             }
 
-            .nav-links a {
-                font-size: 18px;
-                padding: 10px 0;
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero .subtitle {
+                font-size: 16px;
             }
 
             .projects-grid {
@@ -859,13 +923,15 @@
                 width: 120px;
                 height: 120px;
             }
-        }
 
-        .hidden {
-            display: none;
+            .hidden {
+                display: none;
+            }
         }
     </style>
+    
 </head>
+
 <body>
     <header>
         <nav class="container">
@@ -891,14 +957,14 @@
             <h1>Muhammad Faraz</h1>
             <p class="subtitle">MERN Stack Developer | DevOps Enthusiast</p>
             <p class="description">
-                Computer Science Graduate with a strong foundation in full-stack development 
-                and a growing interest in DevOps practices. Experienced in building scalable 
-                web applications using the MERN stack while actively learning Docker, CI/CD 
+                Computer Science Graduate with a strong foundation in full-stack development
+                and a growing interest in DevOps practices. Experienced in building scalable
+                web applications using the MERN stack while actively learning Docker, CI/CD
                 pipelines, Linux fundamentals, and deployment automation.
                 <br><br>
-                Focused on writing clean code and understanding system architecture. Seeking 
-                opportunities to apply development skills while gaining hands-on DevOps 
-                experience. Eager to learn from experienced teams and contribute to building 
+                Focused on writing clean code and understanding system architecture. Seeking
+                opportunities to apply development skills while gaining hands-on DevOps
+                experience. Eager to learn from experienced teams and contribute to building
                 reliable, efficient systems.
             </p>
             <div class="cta-buttons">
@@ -926,7 +992,7 @@
                 <div class="skill-card"><span>Firebase (Auth & Firestore)</span></div>
                 <div class="skill-card"><span>MVC Architecture</span></div>
                 <div class="skill-card"><span>Microservices</span></div>
-                <div class="skill-card"><span>Unit Test</span></div>      
+                <div class="skill-card"><span>Unit Test</span></div>
             </div>
         </div>
     </section>
@@ -938,14 +1004,19 @@
                 <span class="fyp-badge">★ Featured Project - FYP</span>
                 <h3>Legal Sphere – Lawyer Management System</h3>
                 <p style="color: var(--text-secondary); margin-bottom: 25px; font-size: 15px;">
-                    A comprehensive web-based platform built with MERN Stack to digitalize and streamline legal workflows between lawyers and clients.
+                    A comprehensive web-based platform built with MERN Stack to digitalize and streamline legal
+                    workflows between lawyers and clients.
                 </p>
                 <ul class="fyp-features">
-                    <li>Developed a comprehensive web-based platform to digitalize legal workflows between lawyers and clients</li>
-                    <li>Implemented secure, role-based authentication to manage segregated access for different user types</li>
-                    <li>Integrated real-time chat and appointment scheduling to facilitate seamless lawyer-client communication</li>
+                    <li>Developed a comprehensive web-based platform to digitalize legal workflows between lawyers and
+                        clients</li>
+                    <li>Implemented secure, role-based authentication to manage segregated access for different user
+                        types</li>
+                    <li>Integrated real-time chat and appointment scheduling to facilitate seamless lawyer-client
+                        communication</li>
                     <li>Secured backend APIs using Rate Limiting, Helmet, and Morgan to prevent abuse</li>
-                    <li>Containerized the entire application using Docker to ensure consistent development environments and resolve local MongoDB connectivity issues</li>
+                    <li>Containerized the entire application using Docker to ensure consistent development environments
+                        and resolve local MongoDB connectivity issues</li>
                 </ul>
                 <div class="tech-stack">
                     <span class="tech-badge">MongoDB</span>
@@ -963,7 +1034,7 @@
     <section id="projects">
         <div class="container">
             <h2 class="section-title">Other Projects</h2>
-            
+
             <div class="projects-filter">
                 <button class="filter-btn active" data-filter="all">All</button>
                 <button class="filter-btn" data-filter="development">Development</button>
@@ -975,7 +1046,9 @@
                 <div class="project-card" data-category="development">
                     <span class="project-tag">Development</span>
                     <h3>Perfume E-Commerce Platform</h3>
-                    <p>Modern e-commerce platform with microservices-ready architecture. Built as a monolith but structured with clear service boundaries enabling seamless migration to distributed microservices if scaling requirements arise.</p>
+                    <p>Modern e-commerce platform with microservices-ready architecture. Built as a monolith but
+                        structured with clear service boundaries enabling seamless migration to distributed
+                        microservices if scaling requirements arise.</p>
                     <div class="tech-stack">
                         <span class="tech-badge">MERN Stack</span>
                         <span class="tech-badge">Microservices-Ready</span>
@@ -987,7 +1060,8 @@
                 <div class="project-card" data-category="development">
                     <span class="project-tag">Development</span>
                     <h3>School Management System</h3>
-                    <p>Scalable backend architecture handling student records, teacher management, and scheduling. Implements RBAC with normalized MySQL database and RESTful APIs following MVC pattern.</p>
+                    <p>Scalable backend architecture handling student records, teacher management, and scheduling.
+                        Implements RBAC with normalized MySQL database and RESTful APIs following MVC pattern.</p>
                     <div class="tech-stack">
                         <span class="tech-badge">Node.js</span>
                         <span class="tech-badge">Express.js</span>
@@ -999,7 +1073,8 @@
                 <div class="project-card" data-category="development">
                     <span class="project-tag">Development</span>
                     <h3>FalmSafe - Telemedicine Platform</h3>
-                    <p>Doctor-patient consultation platform with secure backend APIs. Manages relationships between patients, doctors, and appointments with comprehensive input validation.</p>
+                    <p>Doctor-patient consultation platform with secure backend APIs. Manages relationships between
+                        patients, doctors, and appointments with comprehensive input validation.</p>
                     <div class="tech-stack">
                         <span class="tech-badge">Node.js</span>
                         <span class="tech-badge">Express.js</span>
@@ -1011,7 +1086,8 @@
                 <div class="project-card" data-category="network">
                     <span class="project-tag">Network Security</span>
                     <h3>Network Traffic Firewall Simulation</h3>
-                    <p>Rule-based packet filtering engine simulating network security protocols. Features real-time traffic analysis dashboard to visualize and distinguish between allowed and blocked packets.</p>
+                    <p>Rule-based packet filtering engine simulating network security protocols. Features real-time
+                        traffic analysis dashboard to visualize and distinguish between allowed and blocked packets.</p>
                     <div class="tech-stack">
                         <span class="tech-badge">Node.js</span>
                         <span class="tech-badge">MongoDB</span>
@@ -1023,7 +1099,8 @@
                 <div class="project-card" data-category="devops">
                     <span class="project-tag">DevOps</span>
                     <h3>Docker Containerization</h3>
-                    <p>Dockerized the backend of a MERN application, standardizing the development environment and resolving database connectivity issues during containerized deployments</p>
+                    <p>Dockerized the backend of a MERN application, standardizing the development environment and
+                        resolving database connectivity issues during containerized deployments</p>
                     <div class="tech-stack">
                         <span class="tech-badge">Docker</span>
                         <span class="tech-badge">Docker Compose</span>
@@ -1044,15 +1121,15 @@
                     <a href="mailto:faraztkd05@gmail.com">faraztkd05@gmail.com</a>
                 </div>
                 <div class="contact-card">
-                    <h3>📱 Phone</h3>
+                    <h3>📞 Phone</h3>
                     <a href="tel:+923119360216">+92 311 9360216</a>
                 </div>
                 <div class="contact-card">
-                    <h3>💼 LinkedIn</h3>
+                    <h3>🔗 LinkedIn</h3>
                     <a href="http://linkedin.com/in/muhammad-faraz-44922b370/" target="_blank">Connect on LinkedIn</a>
                 </div>
                 <div class="contact-card">
-                    <h3>💻 GitHub</h3>
+                    <h3>🔗 GitHub</h3>
                     <a href="https://github.com/farazAhmed03" target="_blank">View My Code</a>
                 </div>
             </div>
@@ -1070,10 +1147,16 @@
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
 
-        hamburger.addEventListener('click', () => {
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
             hamburger.classList.toggle('active');
             navLinks.classList.toggle('active');
         });
+
+        navLinks.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
 
         // Close menu when clicking on a link
         document.querySelectorAll('.nav-links a').forEach(link => {
@@ -1122,6 +1205,7 @@
                 }
             });
         });
+
     </script>
 </body>
 </html>
