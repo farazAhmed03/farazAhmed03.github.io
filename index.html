@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muhammad Faraz - Software Engineer</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Muhammad Faraz - Associate Software Engineer</title>
     <style>
         * {
             margin: 0;
@@ -32,7 +32,6 @@
             position: relative;
         }
 
-        /* Animated Background */
         body::before {
             content: '';
             position: fixed;
@@ -63,7 +62,6 @@
             }
         }
 
-        /* Grid Pattern */
         body::after {
             content: '';
             position: fixed;
@@ -98,7 +96,6 @@
             z-index: 1;
         }
 
-        /* Header */
         header {
             background: rgba(26, 26, 26, 0.8);
             border-bottom: 1px solid var(--border);
@@ -201,7 +198,6 @@
             width: 100%;
         }
 
-        /* Hero Section */
         .hero {
             padding: 120px 0 100px;
             text-align: center;
@@ -240,7 +236,7 @@
             box-shadow:
                 0 0 20px rgba(0, 255, 136, 0.4),
                 0 0 40px rgba(0, 255, 136, 0.2),
-                0 0 60px rgba(0, 255, 136, 0.1);
+                0 0 60px rgba(0, 255, 136, 0.1_prof);
             animation: profileFloat 3s ease-in-out infinite, fadeInUp 0.8s ease, profilePulse 2s ease-in-out infinite;
             object-fit: cover;
             position: relative;
@@ -403,7 +399,6 @@
             transform: translateY(-3px);
         }
 
-        /* Section */
         section {
             padding: 100px 0;
             position: relative;
@@ -440,7 +435,6 @@
             }
         }
 
-        /* Skills */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -618,26 +612,6 @@
             animation-delay: calc(0.4s + var(--i) * 0.1s);
         }
 
-        .fyp-features li:nth-child(1) {
-            --i: 0;
-        }
-
-        .fyp-features li:nth-child(2) {
-            --i: 1;
-        }
-
-        .fyp-features li:nth-child(3) {
-            --i: 2;
-        }
-
-        .fyp-features li:nth-child(4) {
-            --i: 3;
-        }
-
-        .fyp-features li:nth-child(5) {
-            --i: 4;
-        }
-
         .fyp-features li::before {
             content: '▹';
             position: absolute;
@@ -659,7 +633,31 @@
             }
         }
 
-        /* Projects */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 22px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tech-badge {
+            padding: 6px 14px;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .tech-badge:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
         .projects-filter {
             display: flex;
             justify-content: center;
@@ -754,32 +752,6 @@
             z-index: 1;
         }
 
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 22px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .tech-badge {
-            padding: 6px 14px;
-            background: var(--bg-secondary);
-            border-radius: 6px;
-            font-size: 12px;
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-            transition: all 0.3s;
-        }
-
-        .tech-badge:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        /* Contact */
         .contact-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -841,7 +813,6 @@
             text-decoration: underline;
         }
 
-        /* Footer */
         footer {
             background: var(--bg-secondary);
             border-top: 1px solid var(--border);
@@ -850,7 +821,6 @@
             color: var(--text-secondary);
         }
 
-        /* Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -863,7 +833,6 @@
             }
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
                 position: fixed;
@@ -888,7 +857,6 @@
                 opacity: 1;
                 pointer-events: auto;
             }
-
 
             .nav-links a {
                 font-size: 18px;
@@ -929,7 +897,6 @@
             }
         }
     </style>
-    
 </head>
 
 <body>
@@ -951,22 +918,21 @@
         </nav>
     </header>
 
+    <!-- ✅ About Section (Summary SAME rakhi hai) -->
     <section class="hero" id="about">
         <div class="container">
-            <img src="./my.png" alt="Muhammad Faraz" class="profile-image">
+            <img src="./my.png" alt="Muhammad Faraz" class="profile-image" />
             <h1>Muhammad Faraz</h1>
-            <p class="subtitle">MERN Stack Developer | DevOps Enthusiast</p>
+            <p class="subtitle">Associate Software Engineer | MERN Stack Developer</p>
+
+            <!-- ✅ SUMMARY EXACT SAME -->
             <p class="description">
-                Computer Science Graduate with a strong foundation in full-stack development
-                and a growing interest in DevOps practices. Experienced in building scalable
-                web applications using the MERN stack while actively learning Docker, CI/CD
-                pipelines, Linux fundamentals, and deployment automation.
-                <br><br>
-                Focused on writing clean code and understanding system architecture. Seeking
-                opportunities to apply development skills while gaining hands-on DevOps
-                experience. Eager to learn from experienced teams and contribute to building
-                reliable, efficient systems.
+                Computer Science Graduate seeking an Associate Software Engineer role with a focus on Web Development.
+                Familiar with Git, GitHub, Linux, and foundational Docker, with a keen interest in learning DevOps and
+                deployment workflows. Quick learner eager to build reliable web systems and grow within a professional
+                engineering team.
             </p>
+
             <div class="cta-buttons">
                 <a href="#contact" class="btn btn-primary">Get In Touch</a>
                 <a href="https://github.com/farazAhmed03" target="_blank" class="btn btn-secondary">View GitHub</a>
@@ -974,29 +940,28 @@
         </div>
     </section>
 
+    <!-- ✅ Skills (Resume Based) -->
     <section id="skills">
         <div class="container">
             <h2 class="section-title">Technical Skills</h2>
             <div class="skills-grid">
-                <div class="skill-card"><span>HTML5 & CSS3</span></div>
+                <div class="skill-card"><span>HTML5</span></div>
+                <div class="skill-card"><span>CSS3</span></div>
+                <div class="skill-card"><span>Bootstrap</span></div>
                 <div class="skill-card"><span>JavaScript (ES6+)</span></div>
-                <div class="skill-card"><span>React.js</span></div>
-                <div class="skill-card"><span>Node.js</span></div>
-                <div class="skill-card"><span>Express.js</span></div>
+                <div class="skill-card"><span>OOP</span></div>
+                <div class="skill-card"><span>React.js (Basic)</span></div>
+                <div class="skill-card"><span>Node.js (Express.js)</span></div>
                 <div class="skill-card"><span>MongoDB</span></div>
-                <div class="skill-card"><span>MySQL</span></div>
-                <div class="skill-card"><span>Docker</span></div>
                 <div class="skill-card"><span>Git & GitHub</span></div>
-                <div class="skill-card"><span>POSTMAN & Postman CLI (Newman)</span></div>
-                <div class="skill-card"><span>REST APIs</span></div>
-                <div class="skill-card"><span>Firebase (Auth & Firestore)</span></div>
-                <div class="skill-card"><span>MVC Architecture</span></div>
-                <div class="skill-card"><span>Microservices</span></div>
-                <div class="skill-card"><span>Unit Test</span></div>
+                <div class="skill-card"><span>Postman</span></div>
+                <div class="skill-card"><span>Linux Fundamentals</span></div>
+                <div class="skill-card"><span>Docker (Familiar)</span></div>
             </div>
         </div>
     </section>
 
+    <!-- ✅ FYP (Resume Based) -->
     <section id="fyp" class="fyp-section">
         <div class="container">
             <h2 class="section-title">Final Year Project</h2>
@@ -1004,36 +969,35 @@
                 <span class="fyp-badge">★ Featured Project - FYP</span>
                 <h3>Legal Sphere – Lawyer Management System</h3>
                 <p style="color: var(--text-secondary); margin-bottom: 25px; font-size: 15px;">
-                    A comprehensive web-based platform built with MERN Stack to digitalize and streamline legal
-                    workflows between lawyers and clients.
+                    MERN stack-based platform that digitalizes legal workflows between lawyers and clients with secure
+                    access, real-time communication, and modular backend architecture.
                 </p>
+
                 <ul class="fyp-features">
-                    <li>Developed a comprehensive web-based platform to digitalize legal workflows between lawyers and
-                        clients</li>
-                    <li>Implemented secure, role-based authentication to manage segregated access for different user
-                        types</li>
-                    <li>Integrated real-time chat and appointment scheduling to facilitate seamless lawyer-client
-                        communication</li>
-                    <li>Secured backend APIs using Rate Limiting, Helmet, and Morgan to prevent abuse</li>
-                    <li>Containerized the entire application using Docker to ensure consistent development environments
-                        and resolve local MongoDB connectivity issues</li>
+                    <li style="--i:0">Developed a web-based platform to digitalize legal workflows between lawyers and clients</li>
+                    <li style="--i:1">Implemented secure role-based authentication, real-time chat, and appointment scheduling</li>
+                    <li style="--i:2">Utilized a microservice architecture structure to enhance modularity and scalability</li>
+                    <li style="--i:3">Secured backend APIs using Rate Limiting, Helmet, and Morgan middleware</li>
+                    <li style="--i:4">Containerized the backend with Docker to resolve local MongoDB connectivity issues</li>
                 </ul>
+
                 <div class="tech-stack">
                     <span class="tech-badge">MongoDB</span>
                     <span class="tech-badge">Express.js</span>
                     <span class="tech-badge">React.js</span>
                     <span class="tech-badge">Node.js</span>
                     <span class="tech-badge">Docker</span>
-                    <span class="tech-badge">Real-time Chat</span>
-                    <span class="tech-badge">JWT Authentication</span>
+                    <span class="tech-badge">JWT Auth</span>
+                    <span class="tech-badge">RBAC</span>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ✅ Projects (Resume Based) -->
     <section id="projects">
         <div class="container">
-            <h2 class="section-title">Other Projects</h2>
+            <h2 class="section-title">Projects</h2>
 
             <div class="projects-filter">
                 <button class="filter-btn active" data-filter="all">All</button>
@@ -1043,75 +1007,59 @@
             </div>
 
             <div class="projects-grid">
+                <!-- Legal Sphere -->
                 <div class="project-card" data-category="development">
                     <span class="project-tag">Development</span>
-                    <h3>Perfume E-Commerce Platform</h3>
-                    <p>Modern e-commerce platform with microservices-ready architecture. Built as a monolith but
-                        structured with clear service boundaries enabling seamless migration to distributed
-                        microservices if scaling requirements arise.</p>
+                    <h3>Legal Sphere – Lawyer Management System</h3>
+                    <p>
+                        Full-stack MERN application that streamlines legal workflows with role-based authentication,
+                        real-time chat, appointments, and secured APIs for better performance & safety.
+                    </p>
                     <div class="tech-stack">
                         <span class="tech-badge">MERN Stack</span>
-                        <span class="tech-badge">Microservices-Ready</span>
-                        <span class="tech-badge">Domain-Driven Design</span>
-                        <span class="tech-badge">REST API</span>
+                        <span class="tech-badge">RBAC</span>
+                        <span class="tech-badge">Rate Limiting</span>
+                        <span class="tech-badge">Docker</span>
                     </div>
                 </div>
 
-                <div class="project-card" data-category="development">
-                    <span class="project-tag">Development</span>
-                    <h3>School Management System</h3>
-                    <p>Scalable backend architecture handling student records, teacher management, and scheduling.
-                        Implements RBAC with normalized MySQL database and RESTful APIs following MVC pattern.</p>
-                    <div class="tech-stack">
-                        <span class="tech-badge">Node.js</span>
-                        <span class="tech-badge">Express.js</span>
-                        <span class="tech-badge">MySQL</span>
-                        <span class="tech-badge">MVC</span>
-                    </div>
-                </div>
-
-                <div class="project-card" data-category="development">
-                    <span class="project-tag">Development</span>
-                    <h3>FalmSafe - Telemedicine Platform</h3>
-                    <p>Doctor-patient consultation platform with secure backend APIs. Manages relationships between
-                        patients, doctors, and appointments with comprehensive input validation.</p>
-                    <div class="tech-stack">
-                        <span class="tech-badge">Node.js</span>
-                        <span class="tech-badge">Express.js</span>
-                        <span class="tech-badge">MySQL</span>
-                        <span class="tech-badge">REST API</span>
-                    </div>
-                </div>
-
+                <!-- Firewall Simulation -->
                 <div class="project-card" data-category="network">
                     <span class="project-tag">Network Security</span>
                     <h3>Network Traffic Firewall Simulation</h3>
-                    <p>Rule-based packet filtering engine simulating network security protocols. Features real-time
-                        traffic analysis dashboard to visualize and distinguish between allowed and blocked packets.</p>
+                    <p>
+                        Rule-based packet filtering engine simulating network security protocols. Analyzed incoming
+                        traffic and built a dashboard to visualize allowed vs blocked packets.
+                    </p>
                     <div class="tech-stack">
                         <span class="tech-badge">Node.js</span>
                         <span class="tech-badge">MongoDB</span>
-                        <span class="tech-badge">HTML5</span>
-                        <span class="tech-badge">CSS3</span>
+                        <span class="tech-badge">HTML</span>
+                        <span class="tech-badge">CSS</span>
+                        <span class="tech-badge">JavaScript</span>
                     </div>
                 </div>
 
+                <!-- Docker Project -->
                 <div class="project-card" data-category="devops">
                     <span class="project-tag">DevOps</span>
-                    <h3>Docker Containerization</h3>
-                    <p>Dockerized the backend of a MERN application, standardizing the development environment and
-                        resolving database connectivity issues during containerized deployments</p>
+                    <h3>Backend Docker Containerization</h3>
+                    <p>
+                        Dockerized MERN backend to standardize environment setup and resolve MongoDB connectivity
+                        issues in local development workflows.
+                    </p>
                     <div class="tech-stack">
                         <span class="tech-badge">Docker</span>
-                        <span class="tech-badge">Docker Compose</span>
                         <span class="tech-badge">MongoDB</span>
-                        <span class="tech-badge">MERN Stack</span>
+                        <span class="tech-badge">Node.js</span>
+                        <span class="tech-badge">Express.js</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ✅ Contact (Resume Based) -->
     <section id="contact">
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
@@ -1157,8 +1105,6 @@
             e.stopPropagation();
         });
 
-
-        // Close menu when clicking on a link
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
@@ -1166,7 +1112,6 @@
             });
         });
 
-        // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
                 hamburger.classList.remove('active');
@@ -1205,7 +1150,7 @@
                 }
             });
         });
-
     </script>
 </body>
+
 </html>
