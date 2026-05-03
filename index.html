@@ -1,554 +1,541 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Muhammad Faraz - Portfolio</title>
-
+  <title>Muhammad Faraz | DevOps Portfolio</title>
+  <meta name="description" content="Muhammad Faraz - Aspiring DevOps Engineer, Computer Science Graduate, Associate Software Engineer, with experience in Docker, Kubernetes, AWS, Linux, networking, and MERN applications." />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
       --bg-primary: #0a0a0a;
-      --bg-secondary: #1a1a1a;
+      --bg-secondary: #111827;
       --bg-card: #161616;
       --accent: #00ff88;
       --accent-secondary: #0088ff;
       --text-primary: #ffffff;
-      --text-secondary: #a0a0a0;
+      --text-secondary: #b7b7b7;
+      --muted: #7f8794;
       --border: #2a2a2a;
+      --warning: #ffd166;
     }
-
+    html { scroll-behavior: smooth; }
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg-primary);
       color: var(--text-primary);
       line-height: 1.6;
       overflow-x: hidden;
       position: relative;
     }
-
-    /* ✅ STATIC Background (No Animation) */
     body::before {
-      content: '';
+      content: "";
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(0, 136, 255, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 40% 20%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
-      z-index: 0;
+        radial-gradient(circle at 20% 30%, rgba(0,255,136,0.08), transparent 40%),
+        radial-gradient(circle at 85% 70%, rgba(0,136,255,0.08), transparent 45%),
+        radial-gradient(circle at 45% 15%, rgba(255,209,102,0.04), transparent 35%);
       pointer-events: none;
+      z-index: 0;
+      animation: bgPulse 10s ease-in-out infinite;
     }
-
-    /* ✅ STATIC Grid (No Animation) */
     body::after {
-      content: '';
+      content: "";
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(rgba(0, 255, 136, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 136, 0.035) 1px, transparent 1px);
+        linear-gradient(rgba(0,255,136,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.035) 1px, transparent 1px);
       background-size: 60px 60px;
-      z-index: 0;
       pointer-events: none;
-      opacity: 0.9;
+      z-index: 0;
+      animation: gridMove 28s linear infinite;
     }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Header */
+    @keyframes bgPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .85; transform: scale(1.03); } }
+    @keyframes gridMove { from { transform: translate(0,0); } to { transform: translate(60px,60px); } }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
     header {
-      background: rgba(26, 26, 26, 0.78);
-      border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(16px);
+      background: rgba(10,10,10,0.84);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(18px);
     }
-
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 22px 0;
-    }
-
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
     .logo {
       font-size: 28px;
       font-weight: 800;
+      letter-spacing: -1px;
       background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -1px;
+      filter: drop-shadow(0 0 8px rgba(0,255,136,0.35));
     }
-
-    .nav-links {
-      display: flex;
-      gap: 40px;
-      list-style: none;
-    }
-
+    .nav-links { display: flex; gap: 30px; list-style: none; }
     .nav-links a {
       color: var(--text-secondary);
       text-decoration: none;
-      transition: color 0.2s ease;
-      font-weight: 500;
+      font-weight: 600;
+      font-size: 14px;
+      transition: .25s ease;
       position: relative;
-      padding: 5px 0;
+      padding-bottom: 6px;
     }
-
     .nav-links a::after {
-      content: '';
+      content: "";
       position: absolute;
-      bottom: 0;
       left: 0;
+      bottom: 0;
       width: 0;
       height: 2px;
       background: var(--accent);
-      transition: width 0.25s ease;
+      transition: .25s ease;
     }
-
     .nav-links a:hover { color: var(--accent); }
     .nav-links a:hover::after { width: 100%; }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 6px;
-      z-index: 101;
-    }
-
-    .hamburger span {
-      width: 26px;
-      height: 3px;
-      background: var(--accent);
-      border-radius: 2px;
-      transition: all 0.25s ease;
-    }
-
-    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(7px, 7px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
+    .hamburger span { width: 26px; height: 3px; background: var(--accent); border-radius: 3px; transition: .25s ease; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(7px,7px); }
     .hamburger.active span:nth-child(2) { opacity: 0; }
-    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
 
-    /* Hero */
     .hero {
-      padding: 110px 0 90px;
-      text-align: center;
-      background: linear-gradient(180deg, rgba(26, 26, 26, 0.55) 0%, transparent 100%);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .profile-image {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      margin: 0 auto 26px;
-      border: 3px solid var(--accent);
-      box-shadow:
-        0 0 18px rgba(0, 255, 136, 0.28),
-        0 0 40px rgba(0, 255, 136, 0.14);
-      object-fit: cover;
-    }
-
-    .hero h1 {
-      font-size: 52px;
-      margin-bottom: 14px;
-      letter-spacing: -0.5px;
-    }
-
-    .hero .subtitle {
-      font-size: 18px;
-      color: var(--accent);
-      margin-bottom: 26px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-weight: 700;
-    }
-
-    .hero .description {
-      max-width: 760px;
-      margin: 0 auto 36px;
-      color: var(--text-secondary);
-      font-size: 16px;
-      line-height: 1.85;
-      text-align: justify;
-    }
-
-    .cta-buttons {
+      min-height: 88vh;
       display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
+      align-items: center;
+      padding: 95px 0 70px;
+      background: linear-gradient(180deg, rgba(17,24,39,0.52), transparent);
+      overflow: hidden;
+      position: relative;
     }
-
-    .btn {
-      padding: 13px 34px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 700;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease, border 0.2s ease;
-      border: 2px solid transparent;
-      font-size: 15px;
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 50px;
+      align-items: center;
+    }
+    .eyebrow {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      min-width: 160px;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: var(--bg-primary);
-      box-shadow: 0 10px 26px rgba(0, 255, 136, 0.16);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 34px rgba(0, 255, 136, 0.22);
-    }
-
-    .btn-secondary {
-      border: 2px solid var(--accent);
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid rgba(0,255,136,0.35);
+      background: rgba(0,255,136,0.08);
       color: var(--accent);
-      background: transparent;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 22px;
+      text-transform: uppercase;
+      letter-spacing: .8px;
     }
-
-    .btn-secondary:hover {
-      background: var(--accent);
-      color: var(--bg-primary);
-      transform: translateY(-2px);
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 68px);
+      line-height: 1.05;
+      margin-bottom: 18px;
+      letter-spacing: -2px;
     }
-
-    /* Sections */
-    section { padding: 95px 0; position: relative; }
-
-    .section-title {
-      font-size: 40px;
-      text-align: center;
-      margin-bottom: 56px;
+    .gradient-text {
+      background: linear-gradient(135deg, #fff, var(--accent), var(--accent-secondary));
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: textShine 4s ease-in-out infinite;
+    }
+    @keyframes textShine { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    .hero .subtitle {
+      font-size: 22px;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 20px;
+      letter-spacing: .4px;
+    }
+    .hero .description {
+      color: var(--text-secondary);
+      font-size: 16px;
+      max-width: 720px;
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 30px; }
+    .btn {
+      display: inline-block;
+      padding: 14px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: .25s ease;
+      border: 2px solid transparent;
       position: relative;
+      overflow: hidden;
     }
-
-    .section-title::after {
-      content: '';
+    .btn-primary { background: var(--accent); color: #05110b; box-shadow: 0 0 25px rgba(0,255,136,0.18); }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,255,136,0.28); }
+    .btn-secondary { color: var(--accent); border-color: var(--accent); background: transparent; }
+    .btn-secondary:hover { background: var(--accent); color: #05110b; transform: translateY(-3px); }
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(120px,1fr));
+      gap: 14px;
+      max-width: 700px;
+    }
+    .stat-card {
+      padding: 18px;
+      border: 1px solid var(--border);
+      background: rgba(22,22,22,.82);
+      border-radius: 14px;
+    }
+    .stat-card strong { display: block; color: var(--accent); font-size: 23px; margin-bottom: 3px; }
+    .stat-card span { color: var(--text-secondary); font-size: 13px; }
+    .profile-panel {
+      background: linear-gradient(145deg, rgba(0,255,136,0.12), rgba(0,136,255,0.1));
+      border: 1px solid rgba(0,255,136,0.25);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.25);
+      animation: floatCard 4s ease-in-out infinite;
+    }
+    @keyframes floatCard { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .profile-image {
+      width: 142px;
+      height: 142px;
+      border-radius: 50%;
       display: block;
-      width: 95px;
+      object-fit: cover;
+      margin: 0 auto 20px;
+      border: 3px solid var(--accent);
+      box-shadow: 0 0 30px rgba(0,255,136,0.28);
+    }
+    .profile-panel h3 { text-align: center; font-size: 24px; margin-bottom: 8px; }
+    .profile-panel p { text-align: center; color: var(--text-secondary); margin-bottom: 20px; }
+    .mini-list { list-style: none; display: grid; gap: 10px; }
+    .mini-list li {
+      padding: 11px 13px;
+      background: rgba(10,10,10,.55);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+    .mini-list li b { color: var(--text-primary); }
+
+    section { padding: 90px 0; position: relative; }
+    .section-title {
+      font-size: clamp(32px,4vw,44px);
+      text-align: center;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-secondary);
+      max-width: 760px;
+      margin: 0 auto 50px;
+      line-height: 1.8;
+    }
+    .section-title::after {
+      content: "";
+      display: block;
+      width: 84px;
       height: 4px;
       background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+      border-radius: 99px;
       margin: 22px auto 0;
-      border-radius: 2px;
     }
 
-    /* Skills */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: stretch;
+    }
+    .glass-card, .project-card, .experience-card, .contact-card {
+      background: rgba(22,22,22,0.88);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      transition: .25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .glass-card:hover, .project-card:hover, .experience-card:hover, .contact-card:hover {
+      border-color: rgba(0,255,136,0.55);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 45px rgba(0,255,136,0.10);
+    }
+    .glass-card h3, .experience-card h3 { margin-bottom: 14px; font-size: 22px; }
+    .glass-card p, .experience-card p { color: var(--text-secondary); line-height: 1.8; }
+
+    .skills-category { margin-bottom: 34px; }
+    .skills-category h3 {
+      font-size: 22px;
+      margin-bottom: 18px;
+      color: var(--accent);
+    }
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+    }
+    .skill-card {
+      background: rgba(22,22,22,.9);
+      border: 1px solid var(--border);
+      padding: 20px 14px;
+      text-align: center;
+      border-radius: 13px;
+      color: var(--text-secondary);
+      font-weight: 700;
+      transition: .25s ease;
+    }
+    .skill-card:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(0,255,136,0.13);
+    }
+
+    .experience-timeline {
+      display: grid;
+      gap: 24px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .experience-meta {
+      color: var(--accent);
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .bullet-list { list-style: none; display: grid; gap: 10px; margin-top: 16px; }
+    .bullet-list li {
+      color: var(--text-secondary);
+      padding-left: 28px;
+      position: relative;
+      line-height: 1.75;
+    }
+    .bullet-list li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 20px;
+      top: -1px;
+    }
+
+    .featured-devops {
+      background: linear-gradient(135deg, rgba(0,255,136,0.07), rgba(0,136,255,0.07));
+      border-top: 1px solid rgba(0,255,136,0.16);
+      border-bottom: 1px solid rgba(0,136,255,0.14);
+    }
+    .feature-card {
+      max-width: 1030px;
+      margin: 0 auto;
+      background: rgba(22,22,22,.92);
+      border: 2px solid rgba(0,255,136,0.45);
+      border-radius: 24px;
+      padding: 42px;
+      box-shadow: 0 24px 80px rgba(0,255,136,0.08);
+    }
+    .badge {
+      display: inline-block;
+      padding: 7px 15px;
+      border-radius: 999px;
+      background: rgba(0,255,136,0.12);
+      color: var(--accent);
+      border: 1px solid rgba(0,255,136,0.25);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .9px;
+      margin-bottom: 16px;
+    }
+    .feature-card h3 { font-size: clamp(28px,4vw,38px); margin-bottom: 18px; }
+    .feature-card p { color: var(--text-secondary); line-height: 1.8; margin-bottom: 18px; }
+    .architecture-flow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin: 28px 0;
+    }
+    .flow-step {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 12px;
+      text-align: center;
+      color: var(--text-secondary);
+      background: rgba(10,10,10,.55);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .flow-step strong { display: block; color: var(--accent); margin-bottom: 4px; }
+
+    .fyp-section {
+      background: linear-gradient(135deg, rgba(0,255,136,.055), rgba(0,136,255,.055));
+    }
+    .fyp-card {
+      max-width: 960px;
+      margin: 0 auto;
+      background: rgba(22,22,22,.92);
+      border: 2px solid rgba(0,136,255,.45);
+      border-radius: 22px;
+      padding: 40px;
+      box-shadow: 0 22px 70px rgba(0,136,255,.08);
+    }
+    .fyp-card h3 { font-size: 32px; margin-bottom: 16px; }
+    .fyp-card p { color: var(--text-secondary); line-height: 1.8; }
+
+    .projects-filter {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 42px;
+    }
+    .filter-btn {
+      border: 1px solid var(--border);
+      background: rgba(22,22,22,.92);
+      color: var(--text-secondary);
+      border-radius: 999px;
+      padding: 12px 22px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .25s ease;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--accent);
+      color: #06110b;
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 26px;
+    }
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(0,255,136,.07), transparent);
+      transform: translateX(-100%);
+      transition: .55s ease;
+      pointer-events: none;
+    }
+    .project-card:hover::before { transform: translateX(100%); }
+    .project-tag {
+      display: inline-block;
+      padding: 6px 13px;
+      background: rgba(0,255,136,.1);
+      color: var(--accent);
+      border: 1px solid rgba(0,255,136,.18);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+    .project-card h3 { font-size: 22px; margin-bottom: 13px; position: relative; z-index: 1; }
+    .project-card p { color: var(--text-secondary); font-size: 14px; line-height: 1.75; position: relative; z-index: 1; }
+    .tech-stack { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 20px; position: relative; z-index: 1; }
+    .tech-badge {
+      padding: 6px 11px;
+      background: rgba(17,24,39,.75);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .hidden { display: none !important; }
+
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
       gap: 18px;
     }
-
-    .skill-card {
-      background: var(--bg-card);
-      padding: 22px;
-      border-radius: 12px;
-      text-align: center;
+    .cert-card {
+      padding: 20px;
+      border-radius: 14px;
       border: 1px solid var(--border);
-      transition: transform 0.18s ease, border 0.18s ease, box-shadow 0.18s ease;
-    }
-
-    .skill-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-5px);
-      box-shadow: 0 10px 28px rgba(0, 255, 136, 0.12);
-    }
-
-    .skill-card span {
-      font-size: 14px;
+      background: rgba(22,22,22,.88);
       color: var(--text-secondary);
-      font-weight: 600;
+      font-weight: 700;
     }
+    .cert-card span { color: var(--accent); }
 
-    /* ✅ FYP Section (Static BG, No Animation) */
-    .fyp-section {
-      background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 136, 255, 0.05));
-      padding: 80px 0;
-      margin: 55px 0;
-      border-radius: 20px;
-      overflow: hidden;
-      position: relative;
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      gap: 20px;
     }
-
-    .fyp-section::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background:
-        radial-gradient(circle at 30% 50%, rgba(0, 255, 136, 0.09) 0%, transparent 50%),
-        radial-gradient(circle at 70% 50%, rgba(0, 136, 255, 0.09) 0%, transparent 50%);
-      pointer-events: none;
-      opacity: 0.9;
+    .contact-card { text-align: center; }
+    .contact-card h3 { margin-bottom: 10px; font-size: 18px; }
+    .contact-card a, .contact-card p {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+      word-break: break-word;
     }
-
-    .fyp-card {
-      background: var(--bg-card);
-      border-radius: 20px;
-      padding: 48px;
-      border: 2px solid var(--accent);
-      max-width: 920px;
-      margin: 0 auto;
-      box-shadow: 0 20px 60px rgba(0, 255, 136, 0.10);
+    .contact-card a:hover { text-decoration: underline; }
+    footer {
+      border-top: 1px solid var(--border);
+      background: rgba(17,24,39,.82);
+      padding: 32px 0;
+      text-align: center;
+      color: var(--text-secondary);
       position: relative;
       z-index: 1;
     }
 
-    .fyp-badge {
-      display: inline-block;
-      padding: 8px 18px;
-      background: var(--accent);
-      color: var(--bg-primary);
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 800;
-      margin-bottom: 18px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    @media (max-width: 900px) {
+      .hero-grid, .about-grid { grid-template-columns: 1fr; }
+      .profile-panel { max-width: 520px; margin: 0 auto; }
+      .architecture-flow { grid-template-columns: 1fr; }
     }
-
-    .fyp-card h3 {
-      font-size: 32px;
-      margin-bottom: 18px;
-    }
-
-    .fyp-card p { text-align: justify; color: var(--text-secondary); }
-
-    .fyp-features {
-      list-style: none;
-      margin: 22px 0 10px;
-    }
-
-    .fyp-features li {
-      padding: 10px 0;
-      padding-left: 28px;
-      position: relative;
-      color: var(--text-secondary);
-      font-size: 15px;
-      line-height: 1.75;
-    }
-
-    .fyp-features li::before {
-      content: '▹';
-      position: absolute;
-      left: 0;
-      top: 10px;
-      color: var(--accent);
-      font-size: 18px;
-    }
-
-    /* Projects */
-    .projects-filter {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 45px;
-      flex-wrap: wrap;
-    }
-
-    .filter-btn {
-      padding: 11px 26px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease, border 0.18s ease;
-      font-weight: 600;
-    }
-
-    .filter-btn.active,
-    .filter-btn:hover {
-      background: var(--accent);
-      color: var(--bg-primary);
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-      gap: 32px;
-    }
-
-    .project-card {
-      background: var(--bg-card);
-      border-radius: 16px;
-      padding: 34px;
-      border: 1px solid var(--border);
-      transition: transform 0.18s ease, border 0.18s ease, box-shadow 0.18s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .project-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-6px);
-      box-shadow: 0 15px 40px rgba(0, 255, 136, 0.12);
-    }
-
-    .project-tag {
-      display: inline-block;
-      padding: 6px 14px;
-      background: rgba(0, 255, 136, 0.10);
-      color: var(--accent);
-      border-radius: 999px;
-      font-size: 12px;
-      margin-bottom: 16px;
-      font-weight: 700;
-    }
-
-    .project-card h3 {
-      font-size: 23px;
-      margin-bottom: 14px;
-    }
-
-    .project-card p {
-      color: var(--text-secondary);
-      margin-bottom: 18px;
-      font-size: 14px;
-      line-height: 1.75;
-      text-align: justify;
-    }
-
-    .tech-stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .tech-badge {
-      padding: 6px 12px;
-      background: var(--bg-secondary);
-      border-radius: 8px;
-      font-size: 12px;
-      color: var(--text-secondary);
-      border: 1px solid var(--border);
-      transition: border 0.18s ease, transform 0.18s ease, color 0.18s ease;
-    }
-
-    .tech-badge:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    /* Contact */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 26px;
-    }
-
-    .contact-card {
-      background: var(--bg-card);
-      padding: 34px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      text-align: center;
-      transition: transform 0.18s ease, border 0.18s ease, box-shadow 0.18s ease;
-    }
-
-    .contact-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-6px);
-      box-shadow: 0 15px 40px rgba(0, 255, 136, 0.12);
-    }
-
-    .contact-card h3 {
-      margin: 10px 0 10px;
-      font-size: 18px;
-    }
-
-    .contact-card a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .contact-card a:hover { text-decoration: underline; }
-
-    /* Footer */
-    footer {
-      background: var(--bg-secondary);
-      border-top: 1px solid var(--border);
-      padding: 32px 0;
-      text-align: center;
-      color: var(--text-secondary);
-    }
-
-    /* Responsive */
     @media (max-width: 768px) {
+      nav { padding: 18px 0; }
+      .hamburger { display: flex; }
       .nav-links {
         position: fixed;
-        top: 76px;
+        top: 70px;
+        left: 0;
         right: 0;
-        width: 100%;
-        height: calc(100vh - 76px);
+        height: calc(100vh - 70px);
         flex-direction: column;
-        background: rgba(10, 10, 10, 0.98);
-        backdrop-filter: blur(18px);
-        padding: 38px 28px;
         gap: 26px;
+        padding: 38px 30px;
+        background: rgba(10,10,10,.98);
         border-top: 1px solid var(--border);
         transform: translateX(100%);
         opacity: 0;
         pointer-events: none;
-        transition: transform 0.25s ease, opacity 0.2s ease;
+        transition: .3s ease;
       }
-
-      .nav-links.active {
-        transform: translateX(0);
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .nav-links a { font-size: 18px; padding: 10px 0; }
-      .hamburger { display: flex; }
-      .hero h1 { font-size: 36px; }
-      .hero .subtitle { font-size: 15px; }
+      .nav-links.active { transform: translateX(0); opacity: 1; pointer-events: auto; }
+      .nav-links a { font-size: 18px; }
+      .hero { min-height: auto; padding: 70px 0; }
+      .hero-actions { flex-direction: column; }
+      .btn { text-align: center; }
+      .quick-stats { grid-template-columns: 1fr; }
+      .feature-card, .fyp-card { padding: 28px; }
       .projects-grid { grid-template-columns: 1fr; }
-      .cta-buttons { flex-direction: column; }
-      .fyp-card { padding: 28px; }
-      .profile-image { width: 120px; height: 120px; }
-      .hidden { display: none; }
+      section { padding: 70px 0; }
     }
   </style>
 </head>
-
 <body>
   <header>
     <nav class="container">
       <div class="logo">M.F</div>
-
       <div class="hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0">
         <span></span><span></span><span></span>
       </div>
-
       <ul class="nav-links" id="navLinks">
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#featured-devops">DevOps</a></li>
         <li><a href="#fyp">FYP</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -556,261 +543,510 @@
     </nav>
   </header>
 
-  <section class="hero" id="about">
-    <div class="container">
-      <img src="./my.png" alt="Muhammad Faraz" class="profile-image" />
-      <h1>Muhammad Faraz</h1>
-      <p class="subtitle">Associate Software Engineer | DevOps Learner</p>
+  <main>
+    <section class="hero" id="about">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Available for Junior DevOps / Cloud / ASE Roles</span>
+          <h1>Hi, I'm <span class="gradient-text">Muhammad Faraz</span></h1>
+          <p class="subtitle">Aspiring DevOps Engineer | Computer Science Graduate | Associate Software Engineer</p>
+          <p class="description">
+            Computer Science graduate focused on DevOps, cloud infrastructure, Linux, Docker, Kubernetes,
+            AWS deployments, and production-ready application delivery. I also have a strong foundation in
+            backend and full-stack development with Node.js, Express.js, MongoDB, REST APIs, secure system design,
+            and MERN-based projects.
+          </p>
+          <div class="hero-actions">
+            <a href="#featured-devops" class="btn btn-primary">View DevOps Work</a>
+            <a href="https://github.com/farazAhmed03" target="_blank" rel="noopener" class="btn btn-secondary">View GitHub</a>
+            <a href="#contact" class="btn btn-secondary">Contact Me</a>
+          </div>
+          <div class="quick-stats">
+            <div class="stat-card"><strong>200+</strong><span>Containers simulated for scale testing</span></div>
+            <div class="stat-card"><strong>AWS</strong><span>EC2, ECR, ECS/EKS, S3, IAM, VPC basics</span></div>
+            <div class="stat-card"><strong>MERN</strong><span>Secure APIs, RBAC, JWT, Socket.io</span></div>
+          </div>
+        </div>
 
-      <p class="description">
-        Computer Science Graduate with a strong foundation in full-stack development
-        and a growing interest in DevOps practices. Experienced in building scalable
-        web applications using the MERN stack while actively learning Docker, CI/CD
-        pipelines, Linux fundamentals, and deployment automation.
-        <br><br>
-        Focused on writing clean code and understanding system architecture. Seeking
-        opportunities to apply development skills while gaining hands-on DevOps
-        experience. Eager to learn from experienced teams and contribute to building
-        reliable, efficient systems.
-      </p>
-
-      <div class="cta-buttons">
-        <a href="#contact" class="btn btn-primary">Get In Touch</a>
-        <a href="https://github.com/farazAhmed03" target="_blank" class="btn btn-secondary" rel="noopener">View GitHub</a>
+        <aside class="profile-panel">
+          <img src="./my.png" alt="Muhammad Faraz" class="profile-image" />
+          <h3>DevOps + Software Engineering</h3>
+          <p>Building reliable deployments from application code to cloud infrastructure.</p>
+          <ul class="mini-list">
+            <li><b>Current Focus:</b> Linux, Docker, Kubernetes, AWS, CI/CD</li>
+            <li><b>Internship:</b> Network, Cloud & Infrastructure at Quantum-Ronics</li>
+            <li><b>Location:</b> Islamabad, Pakistan</li>
+          </ul>
+        </aside>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="skills">
-    <div class="container">
-      <h2 class="section-title">Technical Skills</h2>
-      <div class="skills-grid">
-        <div class="skill-card"><span>HTML5 & CSS3</span></div>
-        <div class="skill-card"><span>JavaScript (ES6+)</span></div>
-        <div class="skill-card"><span>React.js (Basics)</span></div>
-        <div class="skill-card"><span>Node.js (Express)</span></div>
-        <div class="skill-card"><span>MongoDB & MySQL</span></div>
-        <div class="skill-card"><span>Docker (Learning)</span></div>
-        <div class="skill-card"><span>Git & GitHub</span></div>
-        <div class="skill-card"><span>Postman</span></div>
-        <div class="skill-card"><span>REST APIs</span></div>
-        <div class="skill-card"><span>Microservices / MVC</span></div>
+    <section id="overview">
+      <div class="container">
+        <h2 class="section-title">Profile Overview</h2>
+        <p class="section-subtitle">
+          This portfolio is shaped around my DevOps, infrastructure, networking, and software engineering work.
+        </p>
+        <div class="about-grid">
+          <div class="glass-card">
+            <h3>DevOps Direction</h3>
+            <p>
+              I am building my career toward DevOps Engineering with practical exposure to Linux administration,
+              Docker containerization, Kubernetes deployments, AWS cloud services, CI/CD workflows, Nginx reverse proxy,
+              VMware ESXi, server-side operations, monitoring, and deployment automation.
+            </p>
+          </div>
+          <div class="glass-card">
+            <h3>Development Foundation</h3>
+            <p>
+              My development background includes MERN stack applications, secure REST APIs, JWT authentication,
+              role-based access control, API hardening with Helmet.js and rate limiting, Socket.io real-time features,
+              Git/GitHub collaboration, and production deployment troubleshooting.
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="fyp" class="fyp-section">
-    <div class="container">
-      <h2 class="section-title">Final Year Project</h2>
-
-      <div class="fyp-card">
-        <span class="fyp-badge">★ Featured Project - FYP</span>
-        <h3>Legal Sphere – Lawyer Management System</h3>
-        <p style="margin-bottom: 22px; font-size: 15px;">
-          A comprehensive web-based platform built with MERN Stack to digitalize and streamline legal
-          workflows between lawyers and clients.
+    <section id="skills">
+      <div class="container">
+        <h2 class="section-title">Technical Skills</h2>
+        <p class="section-subtitle">
+          Organized by DevOps, cloud, backend, networking, and security so recruiters can quickly see my focus areas.
         </p>
 
-        <ul class="fyp-features">
-          <li>Developed a comprehensive web-based platform to digitalize legal workflows between lawyers and clients</li>
-          <li>Implemented secure, role-based authentication to manage segregated access for different user types</li>
-          <li>Integrated real-time chat and appointment scheduling to facilitate seamless lawyer-client communication</li>
-          <li>Secured backend APIs using Rate Limiting, Helmet, and Morgan to prevent abuse</li>
-          <li>Containerized the application using Docker to ensure consistent development environments and resolve MongoDB issues</li>
-        </ul>
+        <div class="skills-category">
+          <h3>DevOps, Cloud & Infrastructure</h3>
+          <div class="skills-grid">
+            <div class="skill-card">Linux</div>
+            <div class="skill-card">Bash Scripting</div>
+            <div class="skill-card">Git & GitHub</div>
+            <div class="skill-card">Docker</div>
+            <div class="skill-card">Docker Compose</div>
+            <div class="skill-card">Kubernetes</div>
+            <div class="skill-card">AWS EC2</div>
+            <div class="skill-card">AWS ECR</div>
+            <div class="skill-card">AWS ECS / EKS</div>
+            <div class="skill-card">S3 / IAM / VPC</div>
+            <div class="skill-card">Nginx Reverse Proxy</div>
+            <div class="skill-card">CI/CD Basics</div>
+            <div class="skill-card">VMware ESXi</div>
+            <div class="skill-card">Server Monitoring</div>
+          </div>
+        </div>
 
-        <div class="tech-stack">
-          <span class="tech-badge">MongoDB</span>
-          <span class="tech-badge">Express.js</span>
-          <span class="tech-badge">React.js</span>
-          <span class="tech-badge">Node.js</span>
-          <span class="tech-badge">Docker</span>
-          <span class="tech-badge">Real-time Chat</span>
-          <span class="tech-badge">JWT Auth</span>
+        <div class="skills-category">
+          <h3>Backend & Web Development</h3>
+          <div class="skills-grid">
+            <div class="skill-card">JavaScript ES6+</div>
+            <div class="skill-card">Node.js</div>
+            <div class="skill-card">Express.js</div>
+            <div class="skill-card">MongoDB</div>
+            <div class="skill-card">MySQL</div>
+            <div class="skill-card">React.js</div>
+            <div class="skill-card">REST APIs</div>
+            <div class="skill-card">JWT Auth</div>
+            <div class="skill-card">RBAC</div>
+            <div class="skill-card">Socket.io</div>
+            <div class="skill-card">Postman / Newman</div>
+            <div class="skill-card">MVC Architecture</div>
+          </div>
+        </div>
+
+        <div class="skills-category">
+          <h3>Networking & Security Basics</h3>
+          <div class="skills-grid">
+            <div class="skill-card">TCP/IP</div>
+            <div class="skill-card">Subnetting / VLSM</div>
+            <div class="skill-card">VLANs</div>
+            <div class="skill-card">DHCP / DNS / NAT</div>
+            <div class="skill-card">ACLs</div>
+            <div class="skill-card">OSPF / RIP / EIGRP</div>
+            <div class="skill-card">BGP Basics</div>
+            <div class="skill-card">HSRP / STP</div>
+            <div class="skill-card">Cisco Packet Tracer</div>
+            <div class="skill-card">API Security</div>
+            <div class="skill-card">Helmet.js</div>
+            <div class="skill-card">Rate Limiting</div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="projects">
-    <div class="container">
-      <h2 class="section-title">Other Projects</h2>
+    <section id="experience">
+      <div class="container">
+        <h2 class="section-title">Experience</h2>
+        <p class="section-subtitle">Internships and practical exposure aligned with software, networking, cloud, and infrastructure work.</p>
+        <div class="experience-timeline">
+          <article class="experience-card">
+            <span class="experience-meta">Quantum-Ronics — Secretariat, Islamabad | Network, Cloud & Infrastructure Intern / Apprentice</span>
+            <h3>Infrastructure, Networking & Cloud Operations</h3>
+            <p>
+              Working in a real infrastructure environment with exposure to VMware ESXi, virtual machines,
+              server-side tasks, documentation, monitoring, networking analysis, and cloud/infrastructure operations.
+            </p>
+            <ul class="bullet-list">
+              <li>Completed network-analysis focused tasks and now gaining more exposure to cloud and infrastructure operations.</li>
+              <li>Practicing Linux, Docker, Kubernetes, AWS, and deployment workflows alongside assigned office tasks.</li>
+              <li>Understanding how servers, virtual machines, networking, monitoring, and cloud operations connect in real environments.</li>
+            </ul>
+          </article>
 
-      <div class="projects-filter">
-        <button class="filter-btn active" data-filter="all" type="button">All</button>
-        <button class="filter-btn" data-filter="development" type="button">Development</button>
-        <button class="filter-btn" data-filter="network" type="button">Network</button>
-        <button class="filter-btn" data-filter="devops" type="button">DevOps</button>
+          <article class="experience-card">
+            <span class="experience-meta">Infusible Coders Pvt Ltd — Kohat | Web Developer Intern | Dec 2023 – Mar 2024</span>
+            <h3>Full-Stack Web Development</h3>
+            <p>
+              Worked on web application development using JavaScript technologies, API integration, Git/GitHub collaboration,
+              frontend/backend features, and real-world project structure.
+            </p>
+            <ul class="bullet-list">
+              <li>Built and integrated frontend and backend features using modern JavaScript workflows.</li>
+              <li>Worked with APIs, version control, collaborative development, and merge-conflict resolution.</li>
+              <li>Improved understanding of production project structure and clean code practices.</li>
+            </ul>
+          </article>
+        </div>
       </div>
+    </section>
 
-      <div class="projects-grid">
-        <div class="project-card" data-category="development">
-          <span class="project-tag">Development</span>
-          <h3>Perfume E-Commerce Platform</h3>
+    <section id="featured-devops" class="featured-devops">
+      <div class="container">
+        <h2 class="section-title">Featured DevOps Project</h2>
+        <p class="section-subtitle">
+          A DevOps-focused project highlighted separately so the portfolio strongly supports Junior DevOps roles.
+        </p>
+        <article class="feature-card">
+          <span class="badge">Featured DevOps Project</span>
+          <h3>3-Tier MERN Application Deployment Pipeline on AWS</h3>
           <p>
-            Modern e-commerce platform with microservices-ready architecture. Built as a monolith but structured with clear
-            service boundaries enabling a smooth path to distributed services if needed.
+            Designed a production-style deployment workflow for a 3-tier application architecture: React frontend,
+            Node.js/Express backend APIs, and MongoDB database layer. The project focuses on containerization,
+            image publishing, Kubernetes deployment, service exposure, load balancing, and autoscaling.
           </p>
-          <div class="tech-stack">
-            <span class="tech-badge">MERN Stack</span>
-            <span class="tech-badge">REST API</span>
-            <span class="tech-badge">DDD</span>
-            <span class="tech-badge">Microservices-Ready</span>
+
+          <div class="architecture-flow">
+            <div class="flow-step"><strong>Frontend</strong>React / Nginx</div>
+            <div class="flow-step"><strong>Backend</strong>Node.js APIs</div>
+            <div class="flow-step"><strong>Database</strong>MongoDB</div>
+            <div class="flow-step"><strong>Registry</strong>AWS ECR</div>
+            <div class="flow-step"><strong>Runtime</strong>AWS EKS / EC2</div>
           </div>
-        </div>
 
-        <div class="project-card" data-category="development">
-          <span class="project-tag">Development</span>
-          <h3>School Management System</h3>
-          <p>
-            Backend system for student records, teacher management, and scheduling. Implements RBAC with MySQL and RESTful
-            APIs following the MVC pattern.
-          </p>
-          <div class="tech-stack">
-            <span class="tech-badge">Node.js</span>
-            <span class="tech-badge">Express.js</span>
-            <span class="tech-badge">MySQL</span>
-            <span class="tech-badge">MVC</span>
-          </div>
-        </div>
+          <ul class="bullet-list">
+            <li>Containerized frontend, backend, and database components using Docker for environment consistency.</li>
+            <li>Built a deployment flow from local development to Docker image build, ECR push, Kubernetes deployment, ALB routing, and autoscaling.</li>
+            <li>Used Kubernetes Deployments, Services, ConfigMaps, Secrets, and HPA concepts for scalable application delivery.</li>
+            <li>Configured Nginx reverse proxy concepts to route traffic between public entry point and backend services.</li>
+            <li>Practiced reliability thinking through load balancing, service exposure, and future CI/CD integration.</li>
+          </ul>
 
-        <div class="project-card" data-category="development">
-          <span class="project-tag">Development</span>
-          <h3>FalmSafe - Telemedicine Platform</h3>
-          <p>
-            Doctor-patient consultation platform with secure APIs. Manages doctors, patients, and appointments with validation
-            and structured backend logic.
-          </p>
-          <div class="tech-stack">
-            <span class="tech-badge">Node.js</span>
-            <span class="tech-badge">Express.js</span>
-            <span class="tech-badge">MySQL</span>
-            <span class="tech-badge">REST API</span>
-          </div>
-        </div>
-
-        <div class="project-card" data-category="network">
-          <span class="project-tag">Network Security</span>
-          <h3>Network Traffic Firewall Simulation</h3>
-          <p>
-            Rule-based packet filtering engine simulating network security protocols with a dashboard to visualize allowed vs
-            blocked packets.
-          </p>
-          <div class="tech-stack">
-            <span class="tech-badge">Node.js</span>
-            <span class="tech-badge">MongoDB</span>
-            <span class="tech-badge">HTML5</span>
-            <span class="tech-badge">CSS3</span>
-          </div>
-        </div>
-
-        <div class="project-card" data-category="devops">
-          <span class="project-tag">DevOps</span>
-          <h3>Docker Containerization</h3>
-          <p>
-            Dockerized the backend of a MERN application to standardize environment setup and resolve MongoDB connectivity issues
-            during containerized deployments.
-          </p>
           <div class="tech-stack">
             <span class="tech-badge">Docker</span>
             <span class="tech-badge">Docker Compose</span>
+            <span class="tech-badge">Kubernetes</span>
+            <span class="tech-badge">AWS ECR</span>
+            <span class="tech-badge">AWS EKS</span>
+            <span class="tech-badge">ALB</span>
+            <span class="tech-badge">Nginx</span>
+            <span class="tech-badge">Bash</span>
+            <span class="tech-badge">Linux</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="fyp" class="fyp-section">
+      <div class="container">
+        <h2 class="section-title">Final Year Project</h2>
+        <p class="section-subtitle">FYP is kept separate from the other projects so it looks clean and important.</p>
+        <article class="fyp-card">
+          <span class="badge">FYP — MERN Stack</span>
+          <h3>Legal Sphere — Lawyer Management System</h3>
+          <p>
+            A comprehensive lawyer-client management platform built with the MERN stack to digitalize legal workflows,
+            secure role-specific dashboards, and improve communication between lawyers and clients.
+          </p>
+          <ul class="bullet-list">
+            <li>Implemented JWT authentication and Role-Based Access Control for lawyer, client, and admin workflows.</li>
+            <li>Hardened backend APIs with Helmet.js, express-rate-limit, input sanitization, and secure routing practices.</li>
+            <li>Integrated Socket.io for real-time communication and live application updates.</li>
+            <li>Containerized the application with Docker to keep development and deployment environments consistent.</li>
+            <li>Deployed frontend/backend workflows using Vercel, Railway, and later cloud deployment practice.</li>
+          </ul>
+          <div class="tech-stack">
             <span class="tech-badge">MongoDB</span>
+            <span class="tech-badge">Express.js</span>
+            <span class="tech-badge">React.js</span>
             <span class="tech-badge">Node.js</span>
+            <span class="tech-badge">JWT</span>
+            <span class="tech-badge">RBAC</span>
+            <span class="tech-badge">Socket.io</span>
+            <span class="tech-badge">Docker</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <p class="section-subtitle">
+          Projects are separated into DevOps, Development, and Networking so the portfolio fits multiple CV versions.
+        </p>
+
+        <div class="projects-filter">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="devops">DevOps</button>
+          <button class="filter-btn" data-filter="development">Development</button>
+          <button class="filter-btn" data-filter="network">Networking</button>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-card" data-category="devops">
+            <span class="project-tag">DevOps</span>
+            <h3>Container Orchestration & Deployment Automation</h3>
+            <p>
+              Built Bash automation to manage multiple Docker containers, simulated 200+ containers for scalability testing,
+              and designed an AWS EKS/ECR workflow with Kubernetes services, load balancing, and autoscaling concepts.
+            </p>
+            <div class="tech-stack">
+              <span class="tech-badge">Bash</span>
+              <span class="tech-badge">Docker</span>
+              <span class="tech-badge">Kubernetes</span>
+              <span class="tech-badge">AWS EKS</span>
+              <span class="tech-badge">AWS ECR</span>
+              <span class="tech-badge">HPA</span>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="devops">
+            <span class="project-tag">Cloud Deployment</span>
+            <h3>Network Traffic Firewall Simulation & AWS Deployment</h3>
+            <p>
+              Developed a rule-based firewall simulation dashboard to visualize allowed and blocked packets, then migrated
+              the containerized deployment from Vercel/Railway to AWS EC2 with Elastic IP and Nginx reverse proxy.
+            </p>
+            <div class="tech-stack">
+              <span class="tech-badge">AWS EC2</span>
+              <span class="tech-badge">Elastic IP</span>
+              <span class="tech-badge">Nginx</span>
+              <span class="tech-badge">Docker</span>
+              <span class="tech-badge">Node.js</span>
+              <span class="tech-badge">MongoDB</span>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="development">
+            <span class="project-tag">Client Project</span>
+            <h3>United Concrete Flooring — Construction Web Application</h3>
+            <p>
+              Developed a specialized construction platform for an Adelaide-based contractor with service catalogs,
+              project modules, client inquiry features, containerized local development, and deployment troubleshooting
+              on a Hostinger VPS environment.
+            </p>
+            <div class="tech-stack">
+              <span class="tech-badge">Web Development</span>
+              <span class="tech-badge">API Integration</span>
+              <span class="tech-badge">Docker</span>
+              <span class="tech-badge">CI Build Validation</span>
+              <span class="tech-badge">VPS Deployment</span>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="development">
+            <span class="project-tag">Development</span>
+            <h3>Perfume E-Commerce Platform</h3>
+            <p>
+              Built a modern e-commerce platform with a microservices-ready structure, clear service boundaries,
+              REST API design, product workflows, and scalable architecture planning.
+            </p>
+            <div class="tech-stack">
+              <span class="tech-badge">MERN Stack</span>
+              <span class="tech-badge">REST APIs</span>
+              <span class="tech-badge">Microservices-Ready</span>
+              <span class="tech-badge">Domain-Driven Design</span>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="development">
+            <span class="project-tag">Backend</span>
+            <h3>School Management System</h3>
+            <p>
+              Designed backend workflows for student records, teacher management, scheduling, and role-based access
+              using normalized MySQL database design, REST APIs, and MVC architecture.
+            </p>
+            <div class="tech-stack">
+              <span class="tech-badge">Node.js</span>
+              <span class="tech-badge">Express.js</span>
+              <span class="tech-badge">MySQL</span>
+              <span class="tech-badge">RBAC</span>
+              <span class="tech-badge">MVC</span>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="development">
+            <span class="project-tag">Backend</span>
+            <h3>FalmSafe — Telemedicine Platform</h3>
+            <p>
+              Built doctor-patient consultation backend workflows with secure APIs, appointment relationships,
+              validation, and database management for patient, doctor, and scheduling modules.
+            </p>
+            <div class="tech-stack">
+              <span class="tech-badge">Node.js</span>
+              <span class="tech-badge">Express.js</span>
+              <span class="tech-badge">MySQL</span>
+              <span class="tech-badge">REST API</span>
+              <span class="tech-badge">Validation</span>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="network">
+            <span class="project-tag">Networking</span>
+            <h3>Data Center Network Implementation — 2-Tier + 3-Tier Concepts</h3>
+            <p>
+              Designed and simulated a 2-tier data center network in Cisco Packet Tracer while documenting 3-tier
+              architecture concepts. Implemented DHCP, Extended ACLs, internal access restrictions, redundancy ideas,
+              and controlled communication policies.
+            </p>
+            <div class="tech-stack">
+              <span class="tech-badge">Cisco Packet Tracer</span>
+              <span class="tech-badge">DHCP</span>
+              <span class="tech-badge">ACLs</span>
+              <span class="tech-badge">2-Tier</span>
+              <span class="tech-badge">3-Tier Concepts</span>
+              <span class="tech-badge">Data Center</span>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="network">
+            <span class="project-tag">Routing Lab</span>
+            <h3>Routing & Protocol Analysis Lab</h3>
+            <p>
+              Implemented Static, Default, RIP, RIP v2, EIGRP, OSPF multi-area, and basic BGP labs. Analyzed route
+              propagation, hello packets, LSA updates, failure points, and high-availability improvements.
+            </p>
+            <div class="tech-stack">
+              <span class="tech-badge">OSPF</span>
+              <span class="tech-badge">RIP</span>
+              <span class="tech-badge">EIGRP</span>
+              <span class="tech-badge">BGP Basics</span>
+              <span class="tech-badge">Packet Tracer</span>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="network">
+            <span class="project-tag">High Availability</span>
+            <h3>High Availability & Redundancy Lab</h3>
+            <p>
+              Practiced gateway redundancy and failover concepts using HSRP, dual-link topology, STP loop prevention,
+              and conceptual EtherChannel/VRRP understanding within Cisco Packet Tracer constraints.
+            </p>
+            <div class="tech-stack">
+              <span class="tech-badge">HSRP</span>
+              <span class="tech-badge">STP</span>
+              <span class="tech-badge">Redundancy</span>
+              <span class="tech-badge">Failover</span>
+              <span class="tech-badge">Packet Tracer</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="certifications">
+      <div class="container">
+        <h2 class="section-title">Certifications & Learning</h2>
+        <p class="section-subtitle">Certifications and courses aligned with DevOps, networking, Linux, cloud, and infrastructure fundamentals.</p>
+        <div class="cert-grid">
+          <div class="cert-card"><span>AWS</span> — Cloud Practitioner Essentials</div>
+          <div class="cert-card"><span>KodeKloud</span> — DevOps Prerequisites, Git, Docker, Kubernetes</div>
+          <div class="cert-card"><span>Red Hat</span> — Fundamentals of Red Hat Enterprise Linux</div>
+          <div class="cert-card"><span>IBM / Coursera</span> — Computer Networks and Network Security</div>
+          <div class="cert-card"><span>Google / Coursera</span> — The Bits and Bytes of Computer Networking</div>
+          <div class="cert-card"><span>CCNA</span> — In Progress</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title">Contact</h2>
+        <p class="section-subtitle">Open to Junior DevOps, Cloud, Infrastructure, Networking, and Associate Software Engineering opportunities.</p>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>📧 Email</h3>
+            <a href="mailto:faraz.csdev@gmail.com">faraz.csdev@gmail.com</a>
+          </div>
+          <div class="contact-card">
+            <h3>📞 Phone</h3>
+            <a href="tel:+923119360216">+92 311 9360216</a>
+          </div>
+          <div class="contact-card">
+            <h3>🔗 LinkedIn</h3>
+            <a href="http://linkedin.com/in/muhammad-faraz-44922b370/" target="_blank" rel="noopener">Connect on LinkedIn</a>
+          </div>
+          <div class="contact-card">
+            <h3>💻 GitHub</h3>
+            <a href="https://github.com/farazAhmed03" target="_blank" rel="noopener">github.com/farazAhmed03</a>
+          </div>
+          <div class="contact-card">
+            <h3>📍 Location</h3>
+            <p>Islamabad, Pakistan</p>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="container">
-      <h2 class="section-title">Get In Touch</h2>
-      <div class="contact-grid">
-        <div class="contact-card">
-          <h3>📧 Email</h3>
-          <a href="mailto:faraztkd05@gmail.com">faraztkd05@gmail.com</a>
-        </div>
-        <div class="contact-card">
-          <h3>📞 Phone</h3>
-          <a href="tel:+923119360216">+92 311 9360216</a>
-        </div>
-        <div class="contact-card">
-          <h3>🔗 LinkedIn</h3>
-          <a href="http://linkedin.com/in/muhammad-faraz-44922b370/" target="_blank" rel="noopener">Connect on LinkedIn</a>
-        </div>
-        <div class="contact-card">
-          <h3>🔗 GitHub</h3>
-          <a href="https://github.com/farazAhmed03" target="_blank" rel="noopener">View My Code</a>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <footer>
     <div class="container">
-      <p>&copy; 2025 Muhammad Faraz. All rights reserved.</p>
+      <p>&copy; 2026 Muhammad Faraz. Built for DevOps, Cloud, Networking, and Software Engineering roles.</p>
     </div>
   </footer>
 
   <script>
-    // Hamburger Menu
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('navLinks');
+    const hamburger = document.getElementById("hamburger");
+    const navLinks = document.getElementById("navLinks");
 
     function toggleMenu() {
-      hamburger.classList.toggle('active');
-      navLinks.classList.toggle('active');
+      hamburger.classList.toggle("active");
+      navLinks.classList.toggle("active");
     }
 
-    hamburger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      toggleMenu();
+    hamburger.addEventListener("click", toggleMenu);
+    hamburger.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") toggleMenu();
     });
 
-    hamburger.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') toggleMenu();
-    });
-
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('active');
+    document.querySelectorAll(".nav-links a").forEach((link) => {
+      link.addEventListener("click", () => {
+        hamburger.classList.remove("active");
+        navLinks.classList.remove("active");
       });
     });
 
-    document.addEventListener('click', (e) => {
-      if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('active');
+    document.addEventListener("click", (event) => {
+      if (!hamburger.contains(event.target) && !navLinks.contains(event.target)) {
+        hamburger.classList.remove("active");
+        navLinks.classList.remove("active");
       }
     });
 
-    // Project Filter
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const projectCards = document.querySelectorAll('.project-card');
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    const projectCards = document.querySelectorAll(".project-card");
 
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+    filterBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach((item) => item.classList.remove("active"));
+        btn.classList.add("active");
 
         const filter = btn.dataset.filter;
-        projectCards.forEach(card => {
-          if (filter === 'all' || card.dataset.category === filter) card.classList.remove('hidden');
-          else card.classList.add('hidden');
+        projectCards.forEach((card) => {
+          const match = filter === "all" || card.dataset.category === filter;
+          card.classList.toggle("hidden", !match);
         });
-      });
-    });
-
-    // Smooth Scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
   </script>
 </body>
-
 </html>
