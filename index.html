@@ -4,253 +4,133 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Muhammad Faraz — Cloud & Infrastructure Engineer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
-:root {
-  --bg:       #04091A;
-  --bg2:      #070D22;
-  --cyan:     #00E5FF;
-  --purple:   #7C3AED;
-  --purple-l: #A78BFA;
-  --white:    #EEF2FF;
-  --muted:    #5B6A8A;
-  --card:     rgba(255,255,255,0.03);
-  --cb:       rgba(0,229,255,0.1);
-  --glow:     0 0 40px rgba(0,229,255,0.12);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--white);font-family:'Space Grotesk',sans-serif;overflow-x:hidden;line-height:1.6}
+body{background:#02040F;color:#EEF2FF;font-family:'Space Grotesk',sans-serif;overflow-x:hidden}
 ::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:rgba(0,229,255,0.25);border-radius:2px}
+::-webkit-scrollbar-track{background:#02040F}
+::-webkit-scrollbar-thumb{background:rgba(0,255,255,.2);border-radius:2px}
 
-/* CANVAS */
-#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#c{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
 
 /* NAV */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:18px 5%;
-  background:linear-gradient(180deg,rgba(4,9,26,.95) 0%,transparent 100%);
-  backdrop-filter:blur(12px);
-}
-.nav-logo{font-size:1rem;font-weight:700;color:var(--cyan);letter-spacing:-.5px;font-family:'JetBrains Mono',monospace}
-.nav-links{display:flex;gap:28px;list-style:none}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:.82rem;font-weight:500;transition:color .2s}
-.nav-links a:hover{color:var(--cyan)}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:20px 5%;pointer-events:all}
+.nlogo{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:#00FFFF;letter-spacing:-.3px}
+.nlinks{display:flex;gap:28px;list-style:none}
+.nlinks a{color:rgba(238,242,255,.4);text-decoration:none;font-size:.8rem;font-weight:500;transition:color .2s}
+.nlinks a:hover,.nlinks a.act{color:#00FFFF}
+
+/* WRAPPER */
+#wrap{position:relative;z-index:1}
 
 /* HERO */
-#hero{min-height:100vh;display:flex;align-items:center;padding:0 5%;position:relative;z-index:1}
-.hero-inner{padding-top:80px}
-
-.hero-prompt{
-  font-family:'JetBrains Mono',monospace;font-size:.78rem;
-  color:var(--cyan);margin-bottom:28px;
-  opacity:0;animation:fadeUp .5s .2s forwards;
-}
-.hero-prompt .path{color:#4B5A7A}
-.cursor{display:inline-block;width:7px;height:13px;background:var(--cyan);margin-left:3px;vertical-align:middle;animation:blink 1s infinite}
+#hero{min-height:100vh;display:flex;align-items:center;padding:0 5%;pointer-events:none}
+.hc{max-width:580px;padding-top:70px;pointer-events:all}
+.hprompt{font-family:'JetBrains Mono',monospace;font-size:.73rem;color:rgba(0,255,255,.6);margin-bottom:22px;opacity:0;animation:fu .5s .2s forwards}
+.hprompt .p{color:#00FFFF}
+.cblink{display:inline-block;width:7px;height:11px;background:#00FFFF;margin-left:2px;vertical-align:middle;animation:blink 1s infinite}
 @keyframes blink{50%{opacity:0}}
-
-.hero-name{
-  font-size:clamp(3.2rem,9vw,7.5rem);font-weight:700;
-  line-height:1;letter-spacing:-3px;
-  opacity:0;animation:fadeUp .5s .4s forwards;
-}
-.hero-name .outline{
-  color:transparent;
-  -webkit-text-stroke:1.5px rgba(0,229,255,.4);
-}
-
-.hero-tagline{
-  font-size:clamp(.95rem,2vw,1.25rem);
-  color:var(--muted);font-weight:400;
-  margin-top:18px;max-width:560px;
-  opacity:0;animation:fadeUp .5s .6s forwards;
-}
-.hero-tagline b{color:var(--purple-l);font-weight:600}
-
-.hero-ctas{
-  display:flex;gap:14px;margin-top:36px;flex-wrap:wrap;
-  opacity:0;animation:fadeUp .5s .8s forwards;
-}
-.btn-p{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:11px 26px;background:var(--cyan);color:#04091A;
-  font-weight:700;font-size:.82rem;border:none;cursor:pointer;
-  text-decoration:none;border-radius:2px;
-  transition:transform .2s,box-shadow .2s;
-}
-.btn-p:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,229,255,.35)}
-.btn-g{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:10px 26px;background:transparent;color:var(--white);
-  font-weight:500;font-size:.82rem;
-  border:1px solid rgba(255,255,255,.12);cursor:pointer;
-  text-decoration:none;border-radius:2px;
-  transition:border-color .2s,color .2s;
-}
-.btn-g:hover{border-color:var(--cyan);color:var(--cyan)}
-
-.hero-stats{
-  display:flex;gap:48px;margin-top:56px;padding-top:36px;
-  border-top:1px solid rgba(255,255,255,.05);flex-wrap:wrap;
-  opacity:0;animation:fadeUp .5s 1s forwards;
-}
-.stat-n{font-size:2rem;font-weight:700;color:var(--cyan);line-height:1}
-.stat-l{font-size:.7rem;color:var(--muted);margin-top:4px}
-
-/* TERMINAL */
-.terminal{
-  background:rgba(0,0,0,.55);
-  border:1px solid rgba(0,229,255,.12);
-  border-radius:10px;padding:20px;
-  max-width:520px;margin-top:44px;
-  opacity:0;animation:fadeUp .5s 1.2s forwards;
-  backdrop-filter:blur(8px);
-}
-.t-header{display:flex;gap:7px;margin-bottom:16px}
-.dot{width:11px;height:11px;border-radius:50%}
-.t-line{font-family:'JetBrains Mono',monospace;font-size:.72rem;line-height:2;color:var(--muted)}
-.t-line .p{color:var(--cyan)} .t-line .c{color:#C7D2FE} .t-line .ok{color:#4ADE80}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.hname{font-size:clamp(3.2rem,10vw,8.5rem);font-weight:700;letter-spacing:-4px;line-height:.92;opacity:0;animation:fu .5s .4s forwards}
+.hname .ol{color:transparent;-webkit-text-stroke:2px rgba(0,255,255,.35)}
+.hrole{font-size:clamp(.88rem,1.8vw,1.1rem);color:rgba(238,242,255,.5);margin-top:18px;max-width:460px;line-height:1.65;opacity:0;animation:fu .5s .6s forwards}
+.hrole b{color:#A78BFA;font-weight:600}
+.hctas{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;opacity:0;animation:fu .5s .8s forwards}
+.bp{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;background:#00FFFF;color:#02040F;font-weight:700;font-size:.78rem;border:none;cursor:pointer;text-decoration:none;border-radius:2px;transition:transform .2s,box-shadow .2s;font-family:'Space Grotesk',sans-serif}
+.bp:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,255,255,.4)}
+.bg{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;background:transparent;color:#EEF2FF;font-size:.78rem;font-weight:500;border:1px solid rgba(255,255,255,.1);cursor:pointer;text-decoration:none;border-radius:2px;transition:border-color .2s,color .2s;font-family:'Space Grotesk',sans-serif}
+.bg:hover{border-color:#00FFFF;color:#00FFFF}
+.hstats{display:flex;gap:36px;margin-top:44px;padding-top:28px;border-top:1px solid rgba(255,255,255,.05);flex-wrap:wrap;opacity:0;animation:fu .5s 1s forwards}
+.sn{font-size:1.7rem;font-weight:700;color:#00FFFF;line-height:1}
+.sl{font-size:.65rem;color:rgba(238,242,255,.35);margin-top:3px}
+.term{background:rgba(0,0,0,.6);border:1px solid rgba(0,255,255,.1);border-radius:8px;padding:16px;max-width:480px;margin-top:36px;opacity:0;animation:fu .5s 1.2s forwards;backdrop-filter:blur(8px)}
+.th{display:flex;gap:6px;margin-bottom:12px}
+.td{width:9px;height:9px;border-radius:50%}
+.tl{font-family:'JetBrains Mono',monospace;font-size:.65rem;line-height:2;color:rgba(238,242,255,.35)}
+.tl .p{color:#00FFFF}.tl .c{color:#C7D2FE}.tl .ok{color:#4ADE80}
+@keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 
 /* SECTIONS */
-section{position:relative;z-index:1}
-.container{max-width:1080px;margin:0 auto;padding:96px 5%}
+.sec{position:relative;padding:88px 5%;pointer-events:all}
+.gbg{background:rgba(2,4,15,.86);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.dbg{background:rgba(2,4,15,.72)}
+.con{max-width:1060px;margin:0 auto}
+.ey{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:#00FFFF;display:block;margin-bottom:8px}
+.st{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:700;letter-spacing:-1px;line-height:1.1;margin-bottom:44px}
+.st .a{color:transparent;-webkit-text-stroke:1px #A78BFA}
 
-.sh{margin-bottom:52px}
-.eyebrow{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--cyan);display:block;margin-bottom:10px}
-.stitle{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:700;letter-spacing:-1px;line-height:1.15}
-.stitle .a{color:transparent;-webkit-text-stroke:1px var(--purple-l)}
-
-/* EXPERIENCE */
-.exp-card{
-  background:var(--card);border:1px solid var(--cb);
-  border-radius:12px;padding:34px;margin-bottom:22px;
-  transition:border-color .25s;cursor:default;
-  transform-style:preserve-3d;
-}
-.exp-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px;flex-wrap:wrap}
-.exp-co{font-size:.72rem;color:var(--cyan);font-family:'JetBrains Mono',monospace;margin-bottom:5px}
-.exp-role{font-size:1.1rem;font-weight:700}
-.exp-date{font-size:.7rem;color:var(--muted);font-family:'JetBrains Mono',monospace;background:rgba(0,229,255,.07);padding:4px 10px;border-radius:4px;white-space:nowrap}
-.exp-loc{font-size:.68rem;color:var(--muted);margin-top:4px;text-align:right}
-.bullets{list-style:none;display:flex;flex-direction:column;gap:9px}
-.bullets li{font-size:.84rem;color:rgba(238,242,255,.7);padding-left:18px;position:relative;line-height:1.65}
-.bullets li::before{content:'';position:absolute;left:0;top:10px;width:5px;height:1px;background:var(--cyan)}
+/* EXP CARDS */
+.ec{background:rgba(255,255,255,.025);border:1px solid rgba(0,255,255,.08);border-radius:12px;padding:30px;margin-bottom:18px;transform-style:preserve-3d;transition:border-color .2s,transform .08s;cursor:default}
+.ec:hover{border-color:rgba(0,255,255,.28)}
+.ech{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.eco{font-size:.68rem;color:#00FFFF;font-family:'JetBrains Mono',monospace;margin-bottom:4px}
+.ero{font-size:1rem;font-weight:700}
+.edt{font-size:.65rem;color:rgba(238,242,255,.35);font-family:'JetBrains Mono',monospace;background:rgba(0,255,255,.06);padding:3px 9px;border-radius:4px;white-space:nowrap}
+.elc{font-size:.62rem;color:rgba(238,242,255,.25);margin-top:3px;text-align:right}
+.bl{list-style:none;display:flex;flex-direction:column;gap:8px}
+.bl li{font-size:.8rem;color:rgba(238,242,255,.6);padding-left:14px;position:relative;line-height:1.65}
+.bl li::before{content:'';position:absolute;left:0;top:10px;width:4px;height:1px;background:#00FFFF}
 
 /* SKILLS */
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
-.sg{
-  background:var(--card);border:1px solid var(--cb);
-  border-radius:10px;padding:22px;
-  transition:border-color .2s,transform .2s;
-}
-.sg:hover{border-color:rgba(0,229,255,.28);transform:translateY(-2px)}
-.sg-title{font-size:.67rem;color:var(--purple-l);font-family:'JetBrains Mono',monospace;margin-bottom:12px;font-weight:500}
-.tags{display:flex;flex-wrap:wrap;gap:7px}
-.tag{
-  font-size:.7rem;padding:4px 10px;
-  background:rgba(0,229,255,.06);
-  border:1px solid rgba(0,229,255,.13);
-  border-radius:3px;color:rgba(238,242,255,.8);
-  font-family:'JetBrains Mono',monospace;
-  transition:background .2s,border-color .2s;cursor:default;
-}
-.tag:hover{background:rgba(0,229,255,.14);border-color:var(--cyan)}
+.sgg{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.sg{background:rgba(255,255,255,.025);border:1px solid rgba(0,255,255,.08);border-radius:10px;padding:18px;transition:border-color .2s,transform .2s}
+.sg:hover{border-color:rgba(0,255,255,.24);transform:translateY(-2px)}
+.sgt{font-size:.62rem;color:#A78BFA;font-family:'JetBrains Mono',monospace;margin-bottom:10px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:.66rem;padding:3px 9px;background:rgba(0,255,255,.04);border:1px solid rgba(0,255,255,.1);border-radius:3px;color:rgba(238,242,255,.7);font-family:'JetBrains Mono',monospace;transition:all .2s;cursor:default}
+.tag:hover{background:rgba(0,255,255,.1);border-color:#00FFFF;color:#00FFFF}
 
 /* PROJECTS */
-.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:22px}
-.pc{
-  background:var(--card);border:1px solid var(--cb);
-  border-radius:12px;padding:26px;
-  transform-style:preserve-3d;
-  transition:transform .08s;
-  position:relative;overflow:hidden;cursor:default;
-}
-.pc::after{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
-  opacity:0;transition:opacity .3s;
-}
-.pc:hover::after{opacity:1}
-.p-icon{font-size:1.6rem;margin-bottom:14px;display:block}
-.p-title{font-size:.95rem;font-weight:700;margin-bottom:8px}
-.p-desc{font-size:.78rem;color:rgba(238,242,255,.55);line-height:1.75;margin-bottom:14px}
-.p-tech{display:flex;flex-wrap:wrap;gap:5px}
-.tb{font-size:.62rem;padding:3px 8px;background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.22);border-radius:3px;color:var(--purple-l);font-family:'JetBrains Mono',monospace}
+.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.pc{background:rgba(255,255,255,.025);border:1px solid rgba(0,255,255,.08);border-radius:12px;padding:22px;position:relative;overflow:hidden;transform-style:preserve-3d;transition:transform .08s,border-color .2s;cursor:default}
+.pct{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#00FFFF,transparent);opacity:0;transition:opacity .3s}
+.pc:hover .pct{opacity:1}
+.pc:hover{border-color:rgba(0,255,255,.24)}
+.pi{font-size:1.4rem;margin-bottom:12px;display:block}
+.ptit{font-size:.88rem;font-weight:700;margin-bottom:7px}
+.pd{font-size:.75rem;color:rgba(238,242,255,.45);line-height:1.75;margin-bottom:12px}
+.ptech{display:flex;flex-wrap:wrap;gap:5px}
+.tb{font-size:.6rem;padding:2px 7px;background:rgba(123,47,255,.1);border:1px solid rgba(123,47,255,.2);border-radius:3px;color:#A78BFA;font-family:'JetBrains Mono',monospace}
 
 /* CERTS */
-.certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
-.cert{display:flex;align-items:center;gap:14px;padding:16px 18px;background:var(--card);border:1px solid var(--cb);border-radius:8px;transition:border-color .2s}
-.cert:hover{border-color:rgba(0,229,255,.28)}
-.cert-icon{font-size:1.4rem;flex-shrink:0}
-.cert-name{font-size:.78rem;font-weight:600;line-height:1.4;color:rgba(238,242,255,.88)}
-.cert-src{font-size:.67rem;color:var(--muted);margin-top:2px;font-family:'JetBrains Mono',monospace}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:11px}
+.ci{display:flex;align-items:center;gap:11px;padding:13px 15px;background:rgba(255,255,255,.025);border:1px solid rgba(0,255,255,.08);border-radius:8px;transition:border-color .2s}
+.ci:hover{border-color:rgba(0,255,255,.24)}
+.cion{font-size:1.25rem;flex-shrink:0}
+.cin{font-size:.75rem;font-weight:600;line-height:1.35}
+.cis{font-size:.62rem;color:rgba(238,242,255,.3);font-family:'JetBrains Mono',monospace;margin-top:2px}
 
 /* CONTACT */
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
-.ch{font-size:clamp(2rem,5vw,3.4rem);font-weight:700;letter-spacing:-1.5px;line-height:1.1;margin-bottom:20px}
-.ch .glow{color:var(--cyan);text-shadow:0 0 32px rgba(0,229,255,.4)}
-.cd{color:var(--muted);font-size:.88rem;line-height:1.75;margin-bottom:28px;max-width:400px}
-.cl-links{display:flex;flex-direction:column;gap:12px}
-.cl{
-  display:flex;align-items:center;gap:12px;
-  color:rgba(238,242,255,.75);text-decoration:none;
-  font-size:.84rem;padding:14px 18px;
-  background:var(--card);border:1px solid var(--cb);
-  border-radius:8px;transition:color .2s,border-color .2s;
-}
-.cl:hover{color:var(--cyan);border-color:rgba(0,229,255,.28)}
+.ctg{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
+.cth{font-size:clamp(2rem,5vw,3.4rem);font-weight:700;letter-spacing:-1.5px;line-height:1.05;margin-bottom:18px}
+.cth .glow{color:#00FFFF;text-shadow:0 0 40px rgba(0,255,255,.45)}
+.ctd{color:rgba(238,242,255,.4);font-size:.82rem;line-height:1.75;margin-bottom:22px;max-width:360px}
+.cll{display:flex;flex-direction:column;gap:9px}
+.cl{display:flex;align-items:center;gap:11px;color:rgba(238,242,255,.65);text-decoration:none;font-size:.8rem;padding:12px 15px;background:rgba(255,255,255,.025);border:1px solid rgba(0,255,255,.08);border-radius:8px;transition:color .2s,border-color .2s}
+.cl:hover{color:#00FFFF;border-color:rgba(0,255,255,.28)}
 
-/* EDU */
-.edu-card{
-  display:flex;align-items:center;gap:22px;
-  margin-top:44px;background:var(--card);
-  border:1px solid var(--cb);border-radius:12px;padding:28px;
-}
-
-/* FOOTER */
-footer{
-  text-align:center;padding:28px;color:var(--muted);
-  font-size:.7rem;border-top:1px solid rgba(255,255,255,.04);
-  position:relative;z-index:1;font-family:'JetBrains Mono',monospace;
-}
+footer{text-align:center;padding:24px;color:rgba(238,242,255,.15);font-size:.62rem;border-top:1px solid rgba(255,255,255,.04);position:relative;z-index:1;font-family:'JetBrains Mono',monospace;pointer-events:all}
 
 /* REVEAL */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s,transform .6s}
-.reveal.visible{opacity:1;transform:translateY(0)}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .55s,transform .55s}
+.rv.vis{opacity:1;transform:none}
 
-/* RESPONSIVE */
-@media(max-width:768px){
-  .contact-grid{grid-template-columns:1fr;gap:40px}
-  .nav-links{display:none}
-  .hero-stats{gap:28px}
-  .hero-name{letter-spacing:-2px}
-}
-
-/* SECTION BG ACCENTS */
-#experience{background:linear-gradient(180deg,transparent,rgba(124,58,237,.03),transparent)}
-#contact{background:linear-gradient(180deg,transparent,rgba(0,229,255,.02))}
+@media(max-width:768px){.ctg{grid-template-columns:1fr;gap:32px}.nlinks{display:none}.hstats{gap:22px}.hname{letter-spacing:-2px}}
 </style>
 </head>
 <body>
-
-<canvas id="bg-canvas"></canvas>
+<canvas id="c"></canvas>
+<div id="wrap">
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">~/faraz</div>
-  <ul class="nav-links">
-    <li><a href="#experience">Experience</a></li>
+  <div class="nlogo">~/faraz.cloud</div>
+  <ul class="nlinks">
+    <li><a href="#exp">Experience</a></li>
     <li><a href="#skills">Skills</a></li>
-    <li><a href="#projects">Projects</a></li>
+    <li><a href="#proj">Projects</a></li>
     <li><a href="#certs">Certs</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -258,94 +138,65 @@ footer{
 
 <!-- HERO -->
 <section id="hero">
-  <div class="container hero-inner" style="padding-top:100px">
-    <div class="hero-prompt">
-      <span class="path">faraz@cloud-infra:~$</span> whoami<span class="cursor"></span>
+  <div class="hc">
+    <div class="hprompt"><span class="p">faraz@cloud-ops:~$</span> whoami<span class="cblink"></span></div>
+    <h1 class="hname">Muhammad<br><span class="ol">Faraz</span></h1>
+    <p class="hrole"><b>Cloud &amp; Infrastructure Operations Engineer</b> — production VMware, AWS migrations &amp; monitoring at <b>Quantum Ronics, Ministry of Defence</b></p>
+    <div class="hctas">
+      <a href="mailto:faraz.csdev@gmail.com" class="bp">Get in touch</a>
+      <a href="https://github.com/farazAhmed03" target="_blank" class="bg">GitHub</a>
+      <a href="https://linkedin.com/in/muhammad-faraz-03042002f" target="_blank" class="bg">LinkedIn</a>
+      <a href="https://farazahmed03.github.io" target="_blank" class="bg">Portfolio</a>
     </div>
-
-    <h1 class="hero-name">
-      Muhammad<br>
-      <span class="outline">Faraz</span>
-    </h1>
-
-    <p class="hero-tagline">
-      <b>Cloud &amp; Infrastructure Operations Engineer</b> — managing production VMware environments, AWS migrations &amp; monitoring at <b>Quantum Ronics (Ministry of Defence)</b>.
-    </p>
-
-    <div class="hero-ctas">
-      <a href="mailto:faraz.csdev@gmail.com" class="btn-p">Get in touch</a>
-      <a href="https://github.com/farazAhmed03" target="_blank" class="btn-g">GitHub</a>
-      <a href="https://linkedin.com/in/muhammad-faraz-03042002f" target="_blank" class="btn-g">LinkedIn</a>
-      <a href="https://farazahmed03.github.io" target="_blank" class="btn-g">Portfolio</a>
+    <div class="hstats">
+      <div><div class="sn">20+</div><div class="sl">Production VMs</div></div>
+      <div><div class="sn">10TB+</div><div class="sl">Migrated to AWS</div></div>
+      <div><div class="sn">99.9%</div><div class="sl">Uptime</div></div>
+      <div><div class="sn">4</div><div class="sl">ESXi Hosts</div></div>
     </div>
-
-    <div class="hero-stats">
-      <div><div class="stat-n">20+</div><div class="stat-l">Production VMs Managed</div></div>
-      <div><div class="stat-n">10TB+</div><div class="stat-l">Workloads Migrated to AWS</div></div>
-      <div><div class="stat-n">99.9%</div><div class="stat-l">System Uptime Maintained</div></div>
-      <div><div class="stat-n">4</div><div class="stat-l">ESXi Hosts Under Management</div></div>
-    </div>
-
-    <div class="terminal">
-      <div class="t-header">
-        <div class="dot" style="background:#FF5F57"></div>
-        <div class="dot" style="background:#FFBD2E"></div>
-        <div class="dot" style="background:#28C840"></div>
+    <div class="term">
+      <div class="th">
+        <div class="td" style="background:#FF5F57"></div>
+        <div class="td" style="background:#FFBD2E"></div>
+        <div class="td" style="background:#28C840"></div>
       </div>
-      <div class="t-line"><span class="p">faraz@aws-mgn</span> ~ <span class="c">aws mgn describe-source-servers</span></div>
-      <div class="t-line"><span class="ok">✓  600GB production VM migrated successfully via MGN</span></div>
-      <div class="t-line"><span class="p">faraz@terraform</span> ~ <span class="c">terraform apply -auto-approve</span></div>
-      <div class="t-line"><span class="ok">✓  Apply complete. Resources: 12 added, 0 destroyed.</span></div>
-      <div class="t-line"><span class="p">faraz@grafana</span> ~ <span class="c">systemctl status prometheus grafana</span></div>
-      <div class="t-line"><span class="ok">✓  Active (running) — Dashboards healthy. 0 alerts fired.</span></div>
+      <div class="tl"><span class="p">faraz@mgn</span> ~ <span class="c">aws mgn start-cutover --ids srv-prod-001</span></div>
+      <div class="tl"><span class="ok">✓  600GB VM cutover complete. Instance healthy.</span></div>
+      <div class="tl"><span class="p">faraz@tf</span> ~ <span class="c">terraform apply -auto-approve</span></div>
+      <div class="tl"><span class="ok">✓  12 added, 0 destroyed. Infrastructure ready.</span></div>
+      <div class="tl"><span class="p">faraz@prom</span> ~ <span class="c">promtool check config prometheus.yml</span></div>
+      <div class="tl"><span class="ok">✓  0 alerts firing. All 20 nodes reporting.</span></div>
     </div>
   </div>
 </section>
 
 <!-- EXPERIENCE -->
-<section id="experience">
-  <div class="container">
-    <div class="sh reveal">
-      <span class="eyebrow">// work experience</span>
-      <h2 class="stitle">Where I've <span class="a">built things</span></h2>
-    </div>
-
-    <div class="exp-card reveal">
-      <div class="exp-head">
-        <div>
-          <div class="exp-co">Quantum Ronics — Ministry of Defence, Pakistan</div>
-          <div class="exp-role">Cloud &amp; Infrastructure Operations Intern</div>
-        </div>
-        <div style="text-align:right">
-          <div class="exp-date">03/2026 – Present</div>
-          <div class="exp-loc">Islamabad, Pakistan</div>
-        </div>
+<section id="exp" class="sec gbg">
+  <div class="con">
+    <div class="rv"><span class="ey">// work experience</span><h2 class="st">Where I've <span class="a">built things</span></h2></div>
+    <div class="ec rv">
+      <div class="ech">
+        <div><div class="eco">Quantum Ronics — Ministry of Defence, Pakistan</div><div class="ero">Cloud &amp; Infrastructure Operations Intern</div></div>
+        <div><div class="edt">03/2026 – Present</div><div class="elc">Islamabad, Pakistan</div></div>
       </div>
-      <ul class="bullets">
-        <li>Managed 4 VMware ESXi hosts and 20+ production VMs — provisioning, backups, live migrations, and troubleshooting — maintaining 99.9% uptime.</li>
-        <li>Planned and executed 10TB+ local data migrations and VM transfers across different network servers, including a 600+GB production VM cloud migration to AWS using Application Migration Service (MGN).</li>
-        <li>Executed secure cross-account encrypted AMI migrations and resolved complex AWS KMS permission issues.</li>
+      <ul class="bl">
+        <li>Managed 4 VMware ESXi hosts and 20+ production VMs — provisioning, backups, live migrations, and troubleshooting — maintaining 99.9% uptime across the facility.</li>
+        <li>Planned and executed 10TB+ local data migrations and VM transfers across network servers; migrated 600+GB production VM to AWS via Application Migration Service (MGN).</li>
+        <li>Executed secure cross-account encrypted AMI migrations and resolved complex AWS KMS permission chain issues.</li>
         <li>Operated 2 OpenStack private cloud servers; managed VM provisioning and day-to-day instance management.</li>
-        <li>Configured NVIDIA A100 GPU passthrough with CUDA support for AI/ML production workloads.</li>
-        <li>Built real-time infrastructure monitoring and alerting dashboards with Prometheus and Grafana.</li>
+        <li>Configured NVIDIA A100 GPU passthrough with CUDA support for AI/ML production workloads on bare-metal.</li>
+        <li>Built real-time infrastructure monitoring &amp; alerting dashboards with Prometheus and Grafana.</li>
         <li>Deployed OpenVPN gateways for secure remote team access; automated user provisioning via Bash scripts.</li>
-        <li>Installed Dell PowerEdge and H3C enterprise servers from scratch with hardware RAID configurations and managed data center physical cabling and rack setups.</li>
+        <li>Installed Dell PowerEdge and H3C enterprise servers from scratch with hardware RAID; managed data center cabling and rack setups.</li>
       </ul>
     </div>
-
-    <div class="exp-card reveal">
-      <div class="exp-head">
-        <div>
-          <div class="exp-co">Infusible Coders Pvt Ltd</div>
-          <div class="exp-role">Web Developer Intern</div>
-        </div>
-        <div style="text-align:right">
-          <div class="exp-date">12/2023 – 03/2024</div>
-          <div class="exp-loc">Kohat, Pakistan</div>
-        </div>
+    <div class="ec rv">
+      <div class="ech">
+        <div><div class="eco">Infusible Coders Pvt Ltd</div><div class="ero">Web Developer Intern</div></div>
+        <div><div class="edt">12/2023 – 03/2024</div><div class="elc">Kohat, Pakistan</div></div>
       </div>
-      <ul class="bullets">
-        <li>Developed full-stack MERN applications and integrated production-ready REST APIs with JWT token authentication and RBAC.</li>
+      <ul class="bl">
+        <li>Developed full-stack MERN applications and integrated production-ready REST APIs with JWT authentication and RBAC.</li>
         <li>Containerized microservices using Docker for consistent development and deployment environments.</li>
         <li>Collaborated with engineering teams using structured Git/GitHub workflows and branch management.</li>
       </ul>
@@ -354,319 +205,288 @@ footer{
 </section>
 
 <!-- SKILLS -->
-<section id="skills">
-  <div class="container">
-    <div class="sh reveal">
-      <span class="eyebrow">// technical stack</span>
-      <h2 class="stitle">The <span class="a">stack</span></h2>
-    </div>
-
-    <div class="skills-grid">
-      <div class="sg reveal">
-        <div class="sg-title">☁  AWS Cloud</div>
-        <div class="tags">
-          <span class="tag">EC2</span><span class="tag">S3</span><span class="tag">RDS</span>
-          <span class="tag">Aurora</span><span class="tag">IAM</span><span class="tag">VPC</span>
-          <span class="tag">ALB</span><span class="tag">Auto Scaling</span><span class="tag">CloudFront</span>
-          <span class="tag">MGN</span><span class="tag">Transit Gateway</span><span class="tag">KMS</span>
-          <span class="tag">ECS Fargate</span><span class="tag">ECR</span><span class="tag">CloudWatch</span>
-          <span class="tag">WAF</span><span class="tag">Route 53</span>
-        </div>
-      </div>
-
-      <div class="sg reveal">
-        <div class="sg-title">🔧  Infrastructure &amp; Virtualization</div>
-        <div class="tags">
-          <span class="tag">VMware ESXi 7/8</span><span class="tag">vCenter 8</span>
-          <span class="tag">OpenStack</span><span class="tag">Hardware RAID</span>
-          <span class="tag">Dell PowerEdge</span><span class="tag">H3C Servers</span>
-          <span class="tag">GPU Passthrough</span><span class="tag">NVIDIA A100</span>
-          <span class="tag">CUDA</span><span class="tag">CloudStack</span>
-        </div>
-      </div>
-
-      <div class="sg reveal">
-        <div class="sg-title">📦  Containers &amp; IaC</div>
-        <div class="tags">
-          <span class="tag">Docker</span><span class="tag">Docker Compose</span>
-          <span class="tag">Kubernetes</span><span class="tag">Terraform</span>
-          <span class="tag">Terraform Modules</span><span class="tag">State Management</span>
-          <span class="tag">Dynamic AMI Lookup</span>
-        </div>
-      </div>
-
-      <div class="sg reveal">
-        <div class="sg-title">📊  CI/CD &amp; Monitoring</div>
-        <div class="tags">
-          <span class="tag">Prometheus</span><span class="tag">Grafana</span>
-          <span class="tag">CloudWatch</span><span class="tag">GitHub Actions</span>
-          <span class="tag">Git</span><span class="tag">Bash Scripting</span>
-        </div>
-      </div>
-
-      <div class="sg reveal">
-        <div class="sg-title">🌐  Networking &amp; Security</div>
-        <div class="tags">
-          <span class="tag">VPC Design</span><span class="tag">Transit Gateway</span>
-          <span class="tag">VPC Peering</span><span class="tag">NACLs</span>
-          <span class="tag">Security Groups</span><span class="tag">OpenVPN</span>
-          <span class="tag">Tailscale</span><span class="tag">TCP/IP</span>
-          <span class="tag">VLAN</span><span class="tag">OSPF</span>
-          <span class="tag">Active Directory</span>
-        </div>
-      </div>
-
-      <div class="sg reveal">
-        <div class="sg-title">🐧  Systems &amp; Dev</div>
-        <div class="tags">
-          <span class="tag">Linux Ubuntu</span><span class="tag">Rocky Linux</span>
-          <span class="tag">Windows Server</span><span class="tag">SSH</span>
-          <span class="tag">JavaScript</span><span class="tag">Node.js</span>
-          <span class="tag">Express.js</span><span class="tag">MongoDB</span>
-          <span class="tag">React.js</span>
-        </div>
-      </div>
+<section id="skills" class="sec dbg">
+  <div class="con">
+    <div class="rv"><span class="ey">// technical stack</span><h2 class="st">The <span class="a">stack</span></h2></div>
+    <div class="sgg">
+      <div class="sg rv"><div class="sgt">☁  AWS Cloud</div><div class="tags"><span class="tag">EC2</span><span class="tag">S3</span><span class="tag">RDS</span><span class="tag">Aurora</span><span class="tag">IAM</span><span class="tag">VPC</span><span class="tag">ALB</span><span class="tag">Auto Scaling</span><span class="tag">CloudFront</span><span class="tag">MGN</span><span class="tag">Transit Gateway</span><span class="tag">KMS</span><span class="tag">ECS Fargate</span><span class="tag">ECR</span><span class="tag">CloudWatch</span><span class="tag">WAF</span><span class="tag">Route 53</span></div></div>
+      <div class="sg rv"><div class="sgt">🔧  Infrastructure &amp; Virtualization</div><div class="tags"><span class="tag">VMware ESXi 7/8</span><span class="tag">vCenter 8</span><span class="tag">OpenStack</span><span class="tag">Hardware RAID</span><span class="tag">Dell PowerEdge</span><span class="tag">H3C Servers</span><span class="tag">GPU Passthrough</span><span class="tag">NVIDIA A100</span><span class="tag">CUDA</span></div></div>
+      <div class="sg rv"><div class="sgt">📦  Containers &amp; IaC</div><div class="tags"><span class="tag">Docker</span><span class="tag">Docker Compose</span><span class="tag">Kubernetes</span><span class="tag">Terraform</span><span class="tag">Terraform Modules</span><span class="tag">State Management</span><span class="tag">Dynamic AMI</span></div></div>
+      <div class="sg rv"><div class="sgt">📊  CI/CD &amp; Monitoring</div><div class="tags"><span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">CloudWatch</span><span class="tag">GitHub Actions</span><span class="tag">Git</span><span class="tag">Bash Scripting</span></div></div>
+      <div class="sg rv"><div class="sgt">🌐  Networking &amp; Security</div><div class="tags"><span class="tag">VPC Design</span><span class="tag">Transit Gateway</span><span class="tag">VPC Peering</span><span class="tag">NACLs</span><span class="tag">Security Groups</span><span class="tag">OpenVPN</span><span class="tag">Tailscale</span><span class="tag">TCP/IP</span><span class="tag">VLAN</span><span class="tag">OSPF</span><span class="tag">Active Directory</span></div></div>
+      <div class="sg rv"><div class="sgt">🐧  Systems &amp; Dev</div><div class="tags"><span class="tag">Ubuntu Linux</span><span class="tag">Rocky Linux</span><span class="tag">Windows Server</span><span class="tag">SSH</span><span class="tag">JavaScript</span><span class="tag">Node.js</span><span class="tag">Express.js</span><span class="tag">MongoDB</span><span class="tag">React.js</span></div></div>
     </div>
   </div>
 </section>
 
 <!-- PROJECTS -->
-<section id="projects">
-  <div class="container">
-    <div class="sh reveal">
-      <span class="eyebrow">// labs &amp; projects</span>
-      <h2 class="stitle">What I've <span class="a">deployed</span></h2>
-    </div>
-
-    <div class="projects-grid">
-      <div class="pc reveal">
-        <span class="p-icon">⚖️</span>
-        <div class="p-title">Legal Sphere – Lawyer Management System</div>
-        <p class="p-desc">Full-stack MERN FYP containerized and deployed on AWS ECS Fargate with ECR, custom VPC, IAM, Auto Scaling, secrets management, and GitHub Actions CI/CD. Monitored with Prometheus &amp; Grafana.</p>
-        <div class="p-tech">
-          <span class="tb">MERN</span><span class="tb">ECS Fargate</span><span class="tb">ECR</span>
-          <span class="tb">Docker</span><span class="tb">GitHub Actions</span><span class="tb">Prometheus</span>
-        </div>
-      </div>
-
-      <div class="pc reveal">
-        <span class="p-icon">🏗️</span>
-        <div class="p-title">Three-Tier AWS Architecture</div>
-        <p class="p-desc">Production-style 3-tier topology: 1 public + 3 private subnets, Internet Gateway, NAT Gateway, Public ALB, Frontend EC2, Private ALB, Backend EC2, MongoDB. AWS WAF with managed rules integrated on Public ALB.</p>
-        <div class="p-tech">
-          <span class="tb">VPC</span><span class="tb">ALB</span><span class="tb">AWS WAF</span>
-          <span class="tb">NAT Gateway</span><span class="tb">Docker</span><span class="tb">MongoDB</span>
-        </div>
-      </div>
-
-      <div class="pc reveal">
-        <span class="p-icon">🔗</span>
-        <div class="p-title">Multi-VPC Connectivity</div>
-        <p class="p-desc">Interconnected 4 distinct VPCs using AWS Transit Gateway for scalable multi-VPC networking. Validated secure routing isolation with VPC Peering, Security Groups, and NACLs.</p>
-        <div class="p-tech">
-          <span class="tb">Transit Gateway</span><span class="tb">VPC Peering</span>
-          <span class="tb">NACLs</span><span class="tb">Security Groups</span>
-        </div>
-      </div>
-
-      <div class="pc reveal">
-        <span class="p-icon">🌍</span>
-        <div class="p-title">Static Website &amp; Global CDN</div>
-        <p class="p-desc">High-performance static hosting on S3 with CloudFront for low-latency global edge caching. Secured with Origin Access Control (OAC), custom Route 53 DNS records, and HTTPS enforcement.</p>
-        <div class="p-tech">
-          <span class="tb">S3</span><span class="tb">CloudFront</span>
-          <span class="tb">OAC</span><span class="tb">Route 53</span>
-        </div>
-      </div>
-
-      <div class="pc reveal">
-        <span class="p-icon">⚙️</span>
-        <div class="p-title">AWS Infrastructure Automation</div>
-        <p class="p-desc">Automated and scalable AWS EC2 infrastructure using reusable Terraform modules with dynamic AMI lookup, Elastic IP, Security Groups, variables, and output blocks.</p>
-        <div class="p-tech">
-          <span class="tb">Terraform</span><span class="tb">EC2</span>
-          <span class="tb">Elastic IP</span><span class="tb">Dynamic AMI</span>
-        </div>
-      </div>
-
-      <div class="pc reveal">
-        <span class="p-icon">🗄️</span>
-        <div class="p-title">RDS &amp; Aurora Deployment Lab</div>
-        <p class="p-desc">Deployed AWS RDS and Aurora relational database instances inside isolated private subnets with proper security group rules, subnet group configurations, and backup retention policies.</p>
-        <div class="p-tech">
-          <span class="tb">RDS</span><span class="tb">Aurora</span>
-          <span class="tb">Private Subnets</span><span class="tb">Security Groups</span>
-        </div>
-      </div>
+<section id="proj" class="sec gbg">
+  <div class="con">
+    <div class="rv"><span class="ey">// labs &amp; projects</span><h2 class="st">What I've <span class="a">deployed</span></h2></div>
+    <div class="pg">
+      <div class="pc rv"><div class="pct"></div><span class="pi">⚖️</span><div class="ptit">Legal Sphere – Lawyer Management System</div><p class="pd">Full-stack MERN FYP containerized and deployed on AWS ECS Fargate with ECR, custom VPC, IAM, Auto Scaling, secrets management, and GitHub Actions CI/CD. Monitored with Prometheus &amp; Grafana.</p><div class="ptech"><span class="tb">MERN</span><span class="tb">ECS Fargate</span><span class="tb">ECR</span><span class="tb">Docker</span><span class="tb">GitHub Actions</span><span class="tb">Prometheus</span></div></div>
+      <div class="pc rv"><div class="pct"></div><span class="pi">🏗️</span><div class="ptit">Three-Tier AWS Architecture</div><p class="pd">Production 3-tier topology: 1 public + 3 private subnets, IGW, NAT, Public ALB, Frontend EC2, Private ALB, Backend EC2, MongoDB. AWS WAF with managed rules on Public ALB.</p><div class="ptech"><span class="tb">VPC</span><span class="tb">ALB</span><span class="tb">AWS WAF</span><span class="tb">NAT Gateway</span><span class="tb">Docker</span><span class="tb">MongoDB</span></div></div>
+      <div class="pc rv"><div class="pct"></div><span class="pi">🔗</span><div class="ptit">Multi-VPC Connectivity</div><p class="pd">Interconnected 4 VPCs using AWS Transit Gateway for scalable multi-VPC networking. Validated routing boundaries with VPC Peering, Security Groups, and NACLs.</p><div class="ptech"><span class="tb">Transit Gateway</span><span class="tb">VPC Peering</span><span class="tb">NACLs</span><span class="tb">Security Groups</span></div></div>
+      <div class="pc rv"><div class="pct"></div><span class="pi">🌍</span><div class="ptit">Static Website &amp; Global CDN</div><p class="pd">High-performance static hosting on S3 with CloudFront global edge caching, Origin Access Control (OAC), and custom Route 53 DNS records.</p><div class="ptech"><span class="tb">S3</span><span class="tb">CloudFront</span><span class="tb">OAC</span><span class="tb">Route 53</span></div></div>
+      <div class="pc rv"><div class="pct"></div><span class="pi">⚙️</span><div class="ptit">AWS Infrastructure Automation</div><p class="pd">Automated scalable EC2 infrastructure using reusable Terraform modules with dynamic AMI lookup, Elastic IP, Security Groups, variables and outputs.</p><div class="ptech"><span class="tb">Terraform</span><span class="tb">EC2</span><span class="tb">Elastic IP</span><span class="tb">Dynamic AMI</span></div></div>
+      <div class="pc rv"><div class="pct"></div><span class="pi">🗄️</span><div class="ptit">RDS &amp; Aurora Deployment Lab</div><p class="pd">Deployed AWS RDS and Aurora instances inside isolated private subnets with security group rules, subnet group configurations and backup retention.</p><div class="ptech"><span class="tb">RDS</span><span class="tb">Aurora</span><span class="tb">Private Subnets</span><span class="tb">Security Groups</span></div></div>
     </div>
   </div>
 </section>
 
 <!-- CERTS -->
-<section id="certs">
-  <div class="container">
-    <div class="sh reveal">
-      <span class="eyebrow">// credentials</span>
-      <h2 class="stitle">Certs &amp; <span class="a">Training</span></h2>
+<section id="certs" class="sec dbg">
+  <div class="con">
+    <div class="rv"><span class="ey">// credentials</span><h2 class="st">Certs &amp; <span class="a">Training</span></h2></div>
+    <div class="cg">
+      <div class="ci rv"><div class="cion">☁️</div><div><div class="cin">AWS Cloud Practitioner Essentials</div><div class="cis">Amazon Web Services</div></div></div>
+      <div class="ci rv"><div class="cion">🚀</div><div><div class="cin">DevOps Mastery</div><div class="cis">KodeKloud</div></div></div>
+      <div class="ci rv"><div class="cion">🎩</div><div><div class="cin">Red Hat Enterprise Linux Fundamentals</div><div class="cis">Red Hat / Coursera</div></div></div>
+      <div class="ci rv"><div class="cion">🔗</div><div><div class="cin">CCNA — VLANs, Routing, Subnetting</div><div class="cis">Cyberwing Institute, Lahore</div></div></div>
+      <div class="ci rv"><div class="cion">🌐</div><div><div class="cin">Computer Networks &amp; Network Security</div><div class="cis">IBM / Coursera</div></div></div>
+      <div class="ci rv" style="border-color:rgba(0,255,255,.28);background:rgba(0,255,255,.03)"><div class="cion">🎯</div><div><div class="cin">AWS Solutions Architect Associate SAA-C03</div><div class="cis" style="color:#00FFFF">In Progress</div></div></div>
     </div>
-
-    <div class="certs-grid">
-      <div class="cert reveal">
-        <div class="cert-icon">☁️</div>
-        <div>
-          <div class="cert-name">AWS Cloud Practitioner Essentials</div>
-          <div class="cert-src">Amazon Web Services</div>
-        </div>
-      </div>
-      <div class="cert reveal">
-        <div class="cert-icon">🚀</div>
-        <div>
-          <div class="cert-name">DevOps Mastery</div>
-          <div class="cert-src">KodeKloud</div>
-        </div>
-      </div>
-      <div class="cert reveal">
-        <div class="cert-icon">🎩</div>
-        <div>
-          <div class="cert-name">Red Hat Enterprise Linux Fundamentals</div>
-          <div class="cert-src">Red Hat / Coursera</div>
-        </div>
-      </div>
-      <div class="cert reveal">
-        <div class="cert-icon">🔗</div>
-        <div>
-          <div class="cert-name">CCNA Training — VLANs, Routing, Subnetting</div>
-          <div class="cert-src">Cyberwing Institute, Lahore</div>
-        </div>
-      </div>
-      <div class="cert reveal">
-        <div class="cert-icon">🌐</div>
-        <div>
-          <div class="cert-name">Computer Networks &amp; Network Security</div>
-          <div class="cert-src">IBM / Coursera</div>
-        </div>
-      </div>
-      <div class="cert reveal" style="border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.04)">
-        <div class="cert-icon">🎯</div>
-        <div>
-          <div class="cert-name">AWS Solutions Architect Associate (SAA-C03)</div>
-          <div class="cert-src" style="color:var(--cyan)">In Progress</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="edu-card reveal" style="margin-top:44px">
-      <div style="font-size:2.4rem">🎓</div>
-      <div>
-        <div class="exp-co">Kohat University of Science and Technology</div>
-        <div class="exp-role">BS Computer Science</div>
-        <div style="font-size:.75rem;color:var(--muted);margin-top:4px;font-family:'JetBrains Mono',monospace">2021 – 2025 · Kohat, Pakistan</div>
-      </div>
+    <div class="ec rv" style="margin-top:36px;display:flex;align-items:center;gap:20px">
+      <div style="font-size:2.2rem">🎓</div>
+      <div><div class="eco">Kohat University of Science and Technology</div><div class="ero">BS Computer Science</div><div style="font-size:.65rem;color:rgba(238,242,255,.25);margin-top:4px;font-family:'JetBrains Mono',monospace">2021 – 2025 · Kohat, Pakistan</div></div>
     </div>
   </div>
 </section>
 
 <!-- CONTACT -->
-<section id="contact">
-  <div class="container">
-    <div class="contact-grid">
-      <div class="reveal">
-        <h2 class="ch">Let's work<br><span class="glow">together</span></h2>
-        <p class="cd">Open to cloud infrastructure, DevOps, and SRE roles. I bring real hands-on production experience — not just certifications. Based in Islamabad, Pakistan.</p>
-        <a href="mailto:faraz.csdev@gmail.com" class="btn-p">Send an email</a>
+<section id="contact" class="sec gbg">
+  <div class="con">
+    <div class="ctg">
+      <div class="rv">
+        <h2 class="cth">Let's work<br><span class="glow">together</span></h2>
+        <p class="ctd">Open to cloud infrastructure, DevOps, and SRE roles. Real hands-on production experience — not just certs. Based in Islamabad, Pakistan.</p>
+        <a href="mailto:faraz.csdev@gmail.com" class="bp" style="display:inline-flex">Send an email</a>
       </div>
-      <div class="reveal">
-        <div class="cl-links">
-          <a href="mailto:faraz.csdev@gmail.com" class="cl">
-            <span>✉️</span> faraz.csdev@gmail.com
-          </a>
-          <a href="tel:+923449260254" class="cl">
-            <span>📞</span> +92 344 9260254
-          </a>
-          <a href="https://linkedin.com/in/muhammad-faraz-03042002f" target="_blank" class="cl">
-            <span>💼</span> linkedin.com/in/muhammad-faraz-03042002f
-          </a>
-          <a href="https://github.com/farazAhmed03" target="_blank" class="cl">
-            <span>🐙</span> github.com/farazAhmed03
-          </a>
-          <a href="https://farazahmed03.github.io" target="_blank" class="cl">
-            <span>🌐</span> farazahmed03.github.io
-          </a>
+      <div class="rv">
+        <div class="cll">
+          <a href="mailto:faraz.csdev@gmail.com" class="cl"><span>✉️</span> faraz.csdev@gmail.com</a>
+          <a href="tel:+923449260254" class="cl"><span>📞</span> +92 344 9260254</a>
+          <a href="https://linkedin.com/in/muhammad-faraz-03042002f" target="_blank" class="cl"><span>💼</span> linkedin.com/in/muhammad-faraz-03042002f</a>
+          <a href="https://github.com/farazAhmed03" target="_blank" class="cl"><span>🐙</span> github.com/farazAhmed03</a>
+          <a href="https://farazahmed03.github.io" target="_blank" class="cl"><span>🌐</span> farazahmed03.github.io</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<footer>
-  <span style="color:var(--cyan)">Muhammad Faraz</span> — Cloud &amp; Infrastructure Engineer · Built with HTML, CSS &amp; Three.js
-</footer>
+<footer><span style="color:#00FFFF">Muhammad Faraz</span> — Cloud &amp; Infrastructure Engineer · HTML + CSS + Three.js</footer>
+</div>
 
 <script>
-// ================================================
-// THREE.JS — 3D CLOUD NETWORK BACKGROUND
-// ================================================
+// ====================================================
+// THREE.JS — FULL 3D IMMERSIVE SCENE
+// ====================================================
 (function () {
-  const canvas = document.getElementById('bg-canvas');
   const W = window.innerWidth, H = window.innerHeight;
+  const canvas = document.getElementById('c');
 
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
   renderer.setSize(W, H);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setClearColor(0x000000, 0);
+  renderer.setClearColor(0x02040F, 1);
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 1000);
-  camera.position.z = 38;
+  scene.fog = new THREE.FogExp2(0x02040F, 0.011);
 
-  // -- NODES --
-  const N = 65;
-  const nodeData = [];
-  const nodeGeo = new THREE.SphereGeometry(0.1, 6, 6);
+  const camera = new THREE.PerspectiveCamera(65, W / H, 0.1, 500);
+  camera.position.set(0, 2, 24);
 
-  for (let i = 0; i < N; i++) {
-    const x = (Math.random() - 0.5) * 75;
-    const y = (Math.random() - 0.5) * 52;
-    const z = (Math.random() - 0.5) * 28;
-    const speed = 0.008 + Math.random() * 0.012;
-    const mat = new THREE.MeshBasicMaterial({
-      color: Math.random() > 0.5 ? 0x00E5FF : 0x7C3AED,
-      transparent: true,
-      opacity: 0.6 + Math.random() * 0.4,
-    });
-    const mesh = new THREE.Mesh(nodeGeo, mat);
-    mesh.position.set(x, y, z);
-    scene.add(mesh);
-    nodeData.push({
-      mesh, x, y, z,
-      vx: (Math.random() - 0.5) * speed,
-      vy: (Math.random() - 0.5) * speed * 0.7,
-      vz: (Math.random() - 0.5) * speed * 0.5,
-    });
+  // ---- HELPERS ----
+  function lineFromEdges(geo, color, opacity) {
+    return new THREE.LineSegments(
+      new THREE.EdgesGeometry(geo),
+      new THREE.LineBasicMaterial({ color, transparent: true, opacity })
+    );
   }
 
-  // -- LINES --
-  const MAX_SEGS = 250;
-  const posArr = new Float32Array(MAX_SEGS * 6);
-  const colArr = new Float32Array(MAX_SEGS * 6);
-  const lineGeo = new THREE.BufferGeometry();
-  lineGeo.setAttribute('position', new THREE.BufferAttribute(posArr, 3));
-  lineGeo.setAttribute('color',    new THREE.BufferAttribute(colArr, 3));
-  const lineMat = new THREE.LineBasicMaterial({
-    vertexColors: true,
-    transparent: true,
-    opacity: 0.35,
+  // ---- PARTICLES ----
+  const N = 3800;
+  const pp = new Float32Array(N * 3);
+  const pc = new Float32Array(N * 3);
+  for (let i = 0; i < N; i++) {
+    const th = Math.random() * Math.PI * 2;
+    const ph = Math.acos(2 * Math.random() - 1);
+    const r  = 45 + Math.random() * 65;
+    pp[i*3]   = r * Math.sin(ph) * Math.cos(th);
+    pp[i*3+1] = r * Math.sin(ph) * Math.sin(th) * 0.55;
+    pp[i*3+2] = r * Math.cos(ph);
+    const t = Math.random();
+    if (t < 0.38) { pc[i*3]=0; pc[i*3+1]=1; pc[i*3+2]=1; }         // cyan
+    else if (t < 0.65) { pc[i*3]=0.48; pc[i*3+1]=0.18; pc[i*3+2]=1; } // purple
+    else if (t < 0.82) { pc[i*3]=1; pc[i*3+1]=0.17; pc[i*3+2]=0.53; } // pink
+    else { pc[i*3]=1; pc[i*3+1]=1; pc[i*3+2]=1; }                    // white
+  }
+  const pGeo = new THREE.BufferGeometry();
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pp, 3));
+  pGeo.setAttribute('color',    new THREE.BufferAttribute(pc, 3));
+  scene.add(new THREE.Points(pGeo,
+    new THREE.PointsMaterial({ size: 0.13, vertexColors: true, transparent: true, opacity: 0.8, sizeAttenuation: true })
+  ));
+
+  // ---- GRID FLOOR ----
+  const grid = new THREE.GridHelper(160, 50, 0x00FFFF, 0x00FFFF);
+  grid.material.opacity = 0.05;
+  grid.material.transparent = true;
+  grid.position.y = -10;
+  scene.add(grid);
+
+  // ---- SECOND GRID (closer, different size) ----
+  const grid2 = new THREE.GridHelper(80, 20, 0x7B2FFF, 0x7B2FFF);
+  grid2.material.opacity = 0.04;
+  grid2.material.transparent = true;
+  grid2.position.y = -10;
+  scene.add(grid2);
+
+  // ---- CENTRAL STRUCTURE (offset right so text fits on left) ----
+  const main = new THREE.Group();
+  main.position.set(6, 0, 0);
+  scene.add(main);
+
+  // ---- OUTER ICOSAHEDRON ----
+  const outerGeo = new THREE.IcosahedronGeometry(6, 1);
+
+  // Solid dark interior (depth mask)
+  const outerSolid = new THREE.Mesh(outerGeo,
+    new THREE.MeshBasicMaterial({ color: 0x010408, transparent: true, opacity: 0.88 })
+  );
+  main.add(outerSolid);
+
+  // Bright wireframe
+  const outerWire = lineFromEdges(new THREE.IcosahedronGeometry(6, 1), 0x00FFFF, 0.8);
+  main.add(outerWire);
+
+  // Glow layer 1
+  main.add(lineFromEdges(new THREE.IcosahedronGeometry(6.28, 1), 0x00FFFF, 0.22));
+
+  // Glow layer 2
+  main.add(lineFromEdges(new THREE.IcosahedronGeometry(6.6, 1), 0x00FFFF, 0.07));
+
+  // ---- INNER OCTAHEDRON ----
+  const innerSolid = new THREE.Mesh(
+    new THREE.OctahedronGeometry(3.6),
+    new THREE.MeshBasicMaterial({ color: 0x010408, transparent: true, opacity: 0.9 })
+  );
+  main.add(innerSolid);
+
+  const innerWire = lineFromEdges(new THREE.OctahedronGeometry(3.6), 0x7B2FFF, 0.9);
+  main.add(innerWire);
+  main.add(lineFromEdges(new THREE.OctahedronGeometry(3.82), 0x7B2FFF, 0.22));
+
+  // ---- DEEP INNER — tetrahedron ----
+  const deepSolid = new THREE.Mesh(
+    new THREE.TetrahedronGeometry(1.8),
+    new THREE.MeshBasicMaterial({ color: 0x010408, transparent: true, opacity: 0.95 })
+  );
+  main.add(deepSolid);
+  const deepWire = lineFromEdges(new THREE.TetrahedronGeometry(1.8), 0xFF2D87, 0.95);
+  main.add(deepWire);
+  main.add(lineFromEdges(new THREE.TetrahedronGeometry(1.95), 0xFF2D87, 0.2));
+
+  // ---- CORE SPHERE (pulsing) ----
+  const coreMesh = new THREE.Mesh(
+    new THREE.SphereGeometry(0.55, 16, 16),
+    new THREE.MeshBasicMaterial({ color: 0xFFFFFF })
+  );
+  main.add(coreMesh);
+
+  // Core glow sphere
+  const coreGlow = new THREE.Mesh(
+    new THREE.SphereGeometry(0.9, 12, 12),
+    new THREE.MeshBasicMaterial({ color: 0x00FFFF, transparent: true, opacity: 0.08 })
+  );
+  main.add(coreGlow);
+
+  // ---- ORBITAL RINGS (torus) ----
+  function makeTorus(r, tube, col, rx, ry, rz, opacity) {
+    const t = new THREE.Mesh(
+      new THREE.TorusGeometry(r, tube, 3, 120),
+      new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity })
+    );
+    t.rotation.set(rx, ry, rz);
+    main.add(t);
+    return t;
+  }
+  const ring1 = makeTorus(9.5, 0.04, 0x00FFFF, Math.PI*0.22, 0,          0,         0.65);
+  const ring2 = makeTorus(9.5, 0.04, 0x7B2FFF, Math.PI*0.5,  Math.PI*0.28, 0,       0.55);
+  const ring3 = makeTorus(9.5, 0.03, 0xFF2D87, 0,             Math.PI*0.5, Math.PI*0.15, 0.45);
+
+  // Ring glow
+  const rg1 = makeTorus(9.5, 0.12, 0x00FFFF, Math.PI*0.22, 0, 0, 0.06);
+  const rg2 = makeTorus(9.5, 0.12, 0x7B2FFF, Math.PI*0.5, Math.PI*0.28, 0, 0.05);
+
+  // ---- SATELLITE NODES ----
+  const sats = [];
+  const satGeom = new THREE.OctahedronGeometry(0.22);
+  const satConfig = [
+    { r: 11.5, yAng: 0.3,  spd: 0.0042, col: 0x00FFFF },
+    { r: 10.5, yAng: -0.5, spd: 0.0038, col: 0x7B2FFF },
+    { r: 12.5, yAng: 0.8,  spd: 0.0030, col: 0xFF2D87 },
+    { r: 11.0, yAng: -0.2, spd: 0.0050, col: 0x00FFFF },
+    { r: 13.0, yAng: 0.5,  spd: 0.0025, col: 0x7B2FFF },
+    { r: 10.0, yAng: -0.8, spd: 0.0045, col: 0xFF2D87 },
+    { r: 12.0, yAng: 0.1,  spd: 0.0035, col: 0x00FFFF },
+    { r: 11.5, yAng: -0.6, spd: 0.0028, col: 0xFFFFFF },
+  ];
+  satConfig.forEach((cfg, i) => {
+    const mat = new THREE.MeshBasicMaterial({ color: cfg.col, transparent: true, opacity: 0.9 });
+    const mesh = new THREE.Mesh(satGeom, mat);
+    const glowMesh = new THREE.Mesh(
+      new THREE.SphereGeometry(0.35, 8, 8),
+      new THREE.MeshBasicMaterial({ color: cfg.col, transparent: true, opacity: 0.08 })
+    );
+    mesh.add(glowMesh);
+    mesh.userData = { angle: (i / satConfig.length) * Math.PI * 2, ...cfg };
+    main.add(mesh);
+    sats.push(mesh);
   });
-  scene.add(new THREE.LineSegments(lineGeo, lineMat));
 
-  const DIST = 15;
+  // ---- CONNECTION LINES (sat to center) ----
+  const connGeo = new THREE.BufferGeometry();
+  const connPos = new Float32Array(sats.length * 2 * 3);
+  connGeo.setAttribute('position', new THREE.BufferAttribute(connPos, 3));
+  const connMat = new THREE.LineBasicMaterial({ color: 0x00FFFF, transparent: true, opacity: 0.08 });
+  const connLines = new THREE.LineSegments(connGeo, connMat);
+  main.add(connLines);
 
-  // -- MOUSE PARALLAX --
-  let mx = 0, my = 0;
+  // ---- BACKGROUND FLOATING SHAPES ----
+  const floaters = [];
+  [
+    [new THREE.TetrahedronGeometry(1.4), 0x00FFFF, -22, 4,  -15, 0.18],
+    [new THREE.OctahedronGeometry(1.1),  0x7B2FFF,  20, -3, -20, 0.15],
+    [new THREE.IcosahedronGeometry(0.9), 0xFF2D87, -15, 8,  -25, 0.14],
+    [new THREE.OctahedronGeometry(1.6),  0x00FFFF,  18, -8, -18, 0.12],
+    [new THREE.TetrahedronGeometry(0.8), 0x7B2FFF, -28, 2,  -22, 0.16],
+    [new THREE.IcosahedronGeometry(1.3), 0xFF2D87,  26, 6,  -30, 0.1 ],
+  ].forEach(([g, col, x, y, z, op]) => {
+    const m = lineFromEdges(g, col, op);
+    m.position.set(x, y, z);
+    m.userData.rx = (Math.random() - 0.5) * 0.006;
+    m.userData.ry = (Math.random() - 0.5) * 0.006;
+    scene.add(m);
+    floaters.push(m);
+  });
+
+  // ---- MOUSE / SCROLL ----
+  let mx = 0, my = 0, scrollProg = 0;
+  let camTX = 0, camTY = 2;
+
   document.addEventListener('mousemove', e => {
     mx = (e.clientX / window.innerWidth  - 0.5) * 2;
     my = (e.clientY / window.innerHeight - 0.5) * 2;
+    camTX =  mx * 2.8;
+    camTY =  2 - my * 1.8;
   });
+
+  window.addEventListener('scroll', () => {
+    const max = document.body.scrollHeight - window.innerHeight;
+    scrollProg = max > 0 ? window.scrollY / max : 0;
+  }, { passive: true });
 
   window.addEventListener('resize', () => {
     const W2 = window.innerWidth, H2 = window.innerHeight;
@@ -675,95 +495,120 @@ footer{
     renderer.setSize(W2, H2);
   });
 
-  function animate() {
-    requestAnimationFrame(animate);
+  // ---- ANIMATE ----
+  let t = 0;
+  function tick() {
+    requestAnimationFrame(tick);
+    t += 0.008;
 
-    // move nodes
-    nodeData.forEach(n => {
-      n.x += n.vx; n.y += n.vy; n.z += n.vz;
-      if (Math.abs(n.x) > 37) n.vx *= -1;
-      if (Math.abs(n.y) > 26) n.vy *= -1;
-      if (Math.abs(n.z) > 14) n.vz *= -1;
-      n.mesh.position.set(n.x, n.y, n.z);
+    // Main group slow rotation
+    main.rotation.y += 0.0025;
+    main.rotation.x = Math.sin(t * 0.4) * 0.06;
+
+    // Inner elements independent rotation
+    innerWire.rotation.y -= 0.006;
+    innerWire.rotation.x += 0.003;
+    innerSolid.rotation.y = innerWire.rotation.y;
+    innerSolid.rotation.x = innerWire.rotation.x;
+
+    deepWire.rotation.y += 0.01;
+    deepWire.rotation.x -= 0.007;
+    deepSolid.rotation.y = deepWire.rotation.y;
+    deepSolid.rotation.x = deepWire.rotation.x;
+
+    // Rings
+    ring1.rotation.z += 0.004;
+    rg1.rotation.z = ring1.rotation.z;
+    ring2.rotation.z -= 0.0035;
+    rg2.rotation.z = ring2.rotation.z;
+    ring3.rotation.y += 0.005;
+
+    // Core pulse
+    const pulse = 0.5 + Math.sin(t * 2.2) * 0.22;
+    coreMesh.scale.setScalar(pulse);
+    coreGlow.scale.setScalar(1 + Math.sin(t * 2.2) * 0.4);
+    coreGlow.material.opacity = 0.05 + Math.sin(t * 2.2) * 0.04;
+
+    // Satellites orbit + update connection lines
+    sats.forEach((sat, i) => {
+      sat.userData.angle += sat.userData.spd;
+      const a = sat.userData.angle;
+      const r = sat.userData.r;
+      const yA = sat.userData.yAng;
+      const cosYA = Math.cos(yA);
+      sat.position.set(Math.cos(a)*r*cosYA, Math.sin(yA)*r, Math.sin(a)*r*cosYA);
+      sat.rotation.x += 0.02;
+      sat.rotation.y += 0.03;
+
+      // Update conn line
+      const idx = i * 6;
+      connPos[idx]   = sat.position.x;
+      connPos[idx+1] = sat.position.y;
+      connPos[idx+2] = sat.position.z;
+      connPos[idx+3] = 0; connPos[idx+4] = 0; connPos[idx+5] = 0;
+    });
+    connGeo.setDrawRange(0, sats.length * 2);
+    connGeo.attributes.position.needsUpdate = true;
+
+    // Background floaters
+    floaters.forEach(f => {
+      f.rotation.x += f.userData.rx;
+      f.rotation.y += f.userData.ry;
     });
 
-    // build edges
-    let count = 0;
-    const p = lineGeo.attributes.position.array;
-    const c = lineGeo.attributes.color.array;
+    // Grid slow rotate
+    grid.rotation.y  += 0.0003;
+    grid2.rotation.y -= 0.0004;
 
-    for (let i = 0; i < nodeData.length && count < MAX_SEGS; i++) {
-      for (let j = i + 1; j < nodeData.length && count < MAX_SEGS; j++) {
-        const a = nodeData[i], b = nodeData[j];
-        const dx = a.x - b.x, dy = a.y - b.y, dz = a.z - b.z;
-        const d = Math.sqrt(dx*dx + dy*dy + dz*dz);
-        if (d < DIST) {
-          const idx = count * 6;
-          p[idx]   = a.x; p[idx+1] = a.y; p[idx+2] = a.z;
-          p[idx+3] = b.x; p[idx+4] = b.y; p[idx+5] = b.z;
-          // cyan -> purple gradient left -> right
-          const t = (a.x + 37) / 74;
-          c[idx]   = t * 0.48; c[idx+1] = (1-t)*0.9; c[idx+2] = 1;
-          c[idx+3] = t * 0.48; c[idx+4] = (1-t)*0.9; c[idx+5] = 1;
-          count++;
-        }
-      }
-    }
-
-    lineGeo.setDrawRange(0, count * 2);
-    lineGeo.attributes.position.needsUpdate = true;
-    lineGeo.attributes.color.needsUpdate = true;
-
-    // camera parallax
-    camera.position.x += (mx * 2.5 - camera.position.x) * 0.025;
-    camera.position.y += (-my * 1.5 - camera.position.y) * 0.025;
-    camera.lookAt(scene.position);
+    // Camera
+    const baseZ = 24 + scrollProg * 14;
+    const baseY = 2  - scrollProg * 4;
+    camera.position.x += (camTX        - camera.position.x) * 0.025;
+    camera.position.y += (camTY + baseY - camera.position.y) * 0.025;
+    camera.position.z += (baseZ         - camera.position.z) * 0.025;
+    camera.lookAt(main.position);
 
     renderer.render(scene, camera);
   }
-
-  animate();
+  tick();
 })();
 
-// ================================================
+// ====================================================
 // SCROLL REVEAL
-// ================================================
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.08 });
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+// ====================================================
+const obs = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+}, { threshold: 0.07 });
+document.querySelectorAll('.rv').forEach(el => obs.observe(el));
 
-// ================================================
+// ====================================================
 // 3D CARD TILT
-// ================================================
-document.querySelectorAll('.pc, .exp-card').forEach(card => {
+// ====================================================
+document.querySelectorAll('.pc, .ec').forEach(card => {
   card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const x = e.clientX - r.left, y = e.clientY - r.top;
-    const cx = r.width / 2, cy = r.height / 2;
-    const rx = ((y - cy) / cy) * -7;
-    const ry = ((x - cx) / cx) * 7;
-    card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
-    card.style.boxShadow = `${-ry}px ${rx}px 30px rgba(0,229,255,0.08), 0 20px 40px rgba(0,0,0,0.25)`;
-    card.style.borderColor = 'rgba(0,229,255,0.28)';
+    const r  = card.getBoundingClientRect();
+    const rx = ((e.clientY - r.top  - r.height/2) / r.height) * -8;
+    const ry = ((e.clientX - r.left - r.width/2)  / r.width)  * 8;
+    card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`;
+    card.style.boxShadow = `${-ry/3}px ${rx/3}px 32px rgba(0,255,255,0.07)`;
   });
   card.addEventListener('mouseleave', () => {
     card.style.transform = '';
     card.style.boxShadow = '';
-    card.style.borderColor = '';
   });
 });
 
-// ================================================
-// NAV ACTIVE HIGHLIGHT ON SCROLL
-// ================================================
-const sections = document.querySelectorAll('section[id]');
-const links = document.querySelectorAll('.nav-links a');
+// ====================================================
+// NAV ACTIVE
+// ====================================================
+const sects = document.querySelectorAll('section[id]');
+const nls   = document.querySelectorAll('.nlinks a');
 window.addEventListener('scroll', () => {
   let cur = '';
-  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
-  links.forEach(l => {
-    l.style.color = l.getAttribute('href') === '#' + cur ? 'var(--cyan)' : '';
+  sects.forEach(s => { if (window.scrollY >= s.offsetTop - 140) cur = s.id; });
+  nls.forEach(l => {
+    const active = l.getAttribute('href') === '#' + cur;
+    l.style.color = active ? '#00FFFF' : '';
   });
 }, { passive: true });
 </script>
